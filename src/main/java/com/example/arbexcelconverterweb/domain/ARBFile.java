@@ -2,6 +2,7 @@ package com.example.arbexcelconverterweb.domain;
 
 import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
+import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 
