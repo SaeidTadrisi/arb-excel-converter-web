@@ -1,7 +1,9 @@
 package com.example.arbexcelconverterweb.domain;
 
-import com.example.arbexcelconverterweb.domain.exception.FileNotFoundException;
+import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import static java.nio.file.Files.readString;
 
+@Log4j2
 public class ARBFile {
 
     private List<File> arbFiles;
@@ -26,15 +29,20 @@ public class ARBFile {
         List<String> stringFileList = new ArrayList<>();
 
         for (File file : arbFiles) {
-            try {
-                Path path = Paths.get(file.getAbsolutePath());
-                String stringFile = readString(path);
-                stringFileList.add(stringFile);
-
-            } catch (FileNotFoundException | IOException e) {
-            }
+            Path path = Paths.get(file.getAbsolutePath());
+            String stringFile = getReadString(path);
+            stringFileList.add(stringFile);
         }
-        return (stringFileList);
+        return stringFileList;
+    }
+
+    private String getReadString(Path path) {
+        try {
+            return readString(path);
+        } catch (IOException exception) {
+            log.error(exception.getMessage());
+            throw new FileException("File not found");
+        }
     }
 
     private void arbFileCheck(List<File> arbFiles) {
