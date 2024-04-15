@@ -14,11 +14,17 @@ import static java.nio.file.Files.readString;
 
 public class ARBFile {
 
-    private File arbFile;
+    private List<File> arbFiles;
 
-    public List<String> arbToString(List<File> arbFiles) {
-        List<String> stringFileList = new ArrayList<>();
+    public ARBFile(List<File> arbFiles) {
         arbFileCheck(arbFiles);
+        this.arbFiles = arbFiles;
+
+    }
+
+    public List<String> arbToString() {
+        List<String> stringFileList = new ArrayList<>();
+
         for (File file : arbFiles) {
             try {
                 Path path = Paths.get(file.getAbsolutePath());
