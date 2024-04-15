@@ -21,34 +21,34 @@ class ARBFileShould {
 
         String outputFile = """
                 {
-                    "@@locale": "en",
-                    "genericUpdate": "Update",
-                    "profileBiography": "Biography",
-                    "profileBioEmptyMessage": "Help the community know you better!",
-                    "profileUpdateError": "Failed to update profile, are you connected to the internet?",
-                    "alert_errors_found": "Errors found Please fix the following errors: {errors}",
-                    "@alert_errors_found": {
-                      "placeholders": {
-                        "errors": {
-                          "type": "String",
-                          "example": "Please fix the following errors: {errors}"
-                        }
+                  "@@locale": "en",
+                  "genericUpdate": "Update",
+                  "profileBiography": "Biography",
+                  "profileBioEmptyMessage": "Help the community know you better!",
+                  "profileUpdateError": "Failed to update profile, are you connected to the internet?",
+                  "alert_errors_found": "Errors found Please fix the following errors: {errors}",
+                  "@alert_errors_found": {
+                    "placeholders": {
+                      "errors": {
+                        "type": "String",
+                        "example": "Please fix the following errors: {errors}"
                       }
-                    },
-                    "alert_impersonation_notice": "You are currently impersonating {user} / {id}",
-                    "@alert_impersonation_notice": {
-                      "placeholders": {
-                        "id": {
-                          "type": "String",
-                          "example": "You are currently impersonating {user} / {id}"
-                        },
-                        "user": {
-                          "type": "String",
-                          "example": "You are currently impersonating {user} / {id}"
-                        }
+                    }
+                  },
+                  "alert_impersonation_notice": "You are currently impersonating {user} / {id}",
+                  "@alert_impersonation_notice": {
+                    "placeholders": {
+                      "id": {
+                        "type": "String",
+                        "example": "You are currently impersonating {user} / {id}"
+                      },
+                      "user": {
+                        "type": "String",
+                        "example": "You are currently impersonating {user} / {id}"
                       }
-                    },
-                  }""";
+                    }
+                  },
+                }""".replace("\n", "\r\n");;
 
         assertDoesNotThrow(arbFile::arbToString);
         Assertions.assertThat(strings.getFirst()).isEqualTo(outputFile);
