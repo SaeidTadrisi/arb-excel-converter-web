@@ -1,4 +1,4 @@
-package com.example.arbexcelconverterweb.exception;
+package com.example.arbexcelconverterweb.domain.exception;
 
 public class FileNotFoundException extends RuntimeException {
 

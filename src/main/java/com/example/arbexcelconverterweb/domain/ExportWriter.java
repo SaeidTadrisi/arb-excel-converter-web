@@ -1,6 +1,6 @@
 package com.example.arbexcelconverterweb.domain;
 
-import com.example.arbexcelconverterweb.exception.FileInUseException;
+import com.example.arbexcelconverterweb.domain.exception.FileInUseException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
