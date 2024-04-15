@@ -1,7 +1,7 @@
 package com.example.arbexcelconverterweb.domain;
 
-import com.example.arbexcelconverterweb.exception.FileNotFoundException;
-import com.example.arbexcelconverterweb.exception.InvalidFileExtensionException;
+import com.example.arbexcelconverterweb.domain.exception.FileNotFoundException;
+import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
