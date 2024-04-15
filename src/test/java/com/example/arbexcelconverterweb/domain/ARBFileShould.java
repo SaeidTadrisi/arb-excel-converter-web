@@ -58,7 +58,9 @@ class ARBFileShould {
     @Test
     void should_Throws_exception_when_file_extension_is_not_valid() {
         //todo writ arb file in list -> list of......
-        assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of()));
+
+        File file = new File("test.txt");
+        assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of(file)));
     }
 
 
