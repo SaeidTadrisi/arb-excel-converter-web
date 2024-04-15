@@ -16,13 +16,9 @@ public class ARBFile {
 
     private File arbFile;
 
-    private List<String> arbToStringReader(List<File> arbFiles) {
+    public List<String> arbToString(List<File> arbFiles) {
         List<String> stringFileList = new ArrayList<>();
-        try {
-            arbFileCheck(arbFiles);
-        } catch (InvalidFileExtensionException e) {
-
-        }
+        arbFileCheck(arbFiles);
         for (File file : arbFiles) {
             try {
                 Path path = Paths.get(file.getAbsolutePath());
@@ -35,4 +31,11 @@ public class ARBFile {
         return (stringFileList);
     }
 
+    private void arbFileCheck(List<File> arbFiles) {
+        boolean match = arbFiles.stream()
+                .map(File::getName)
+                .allMatch(name -> name.substring(name.lastIndexOf(".") + 1).equals("arb"));
+        if (!match)
+            throw new InvalidFileExtensionException();
+    }
 }
