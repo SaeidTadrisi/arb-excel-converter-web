@@ -1,24 +1,33 @@
 package com.example.arbexcelconverterweb.domain;
 
+import com.example.arbexcelconverterweb.domain.arb.ARBFile;
+import com.example.arbexcelconverterweb.domain.arb.SimpleElements;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ARBFileShould {
+
+    List<String> stringFiles;
+    ARBFile arbFile;
+
+    @BeforeEach
+    void setUp() {
+        File file = new File("intl_en_test.arb");
+        arbFile = new ARBFile(List.of(file));
+        stringFiles = arbFile.arbToString();
+    }
+
     @Test
     void should_convert_arb_file_to_string() {
-        //todo writ arb file in list -> list of......
-
-        File file = new File("intl_en_test.arb");
-        ARBFile arbFile = new ARBFile(List.of(file));
-        List<String> strings = arbFile.arbToString();
-
         String outputFile = """
                 {
                   "@@locale": "en",
@@ -51,17 +60,29 @@ class ARBFileShould {
                 }""".replace("\n", "\r\n");;
 
         assertDoesNotThrow(arbFile::arbToString);
-        Assertions.assertThat(strings.getFirst()).isEqualTo(outputFile);
+        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
 
     }
 
     @Test
-    void should_Throws_exception_when_file_extension_is_not_valid() {
-        //todo writ arb file in list -> list of......
-
+    void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
         assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of(file)));
     }
 
+    @Test
+    void should_create_map_from_simple_elements() {
+        SimpleElements simpleElements = new SimpleElements();
+        Map<String, String> stringMap = simpleElements.otherElementsExtractor(stringFiles.getFirst());
 
+        Map<String, String> expectedMap = Map.of("Key", "en"
+                ,"genericUpdate", "Update"
+                ,"profileBiography", "Biography"
+                ,"profileBioEmptyMessage", "Help the community know you better!"
+                ,"profileUpdateError", "Failed to update profile, are you connected to the internet?"
+                ,"alert_errors_found", "Errors found Please fix the following errors: {errors}"
+                ,"alert_impersonation_notice", "You are currently impersonating {user} / {id}");
+
+        assertThat(expectedMap).isEqualTo(stringMap);
+    }
 }
