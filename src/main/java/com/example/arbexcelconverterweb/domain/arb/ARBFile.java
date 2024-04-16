@@ -1,4 +1,4 @@
-package com.example.arbexcelconverterweb.domain;
+package com.example.arbexcelconverterweb.domain.arb;
 
 import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;

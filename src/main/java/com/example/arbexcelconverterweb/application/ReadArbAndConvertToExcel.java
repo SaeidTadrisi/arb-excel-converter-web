@@ -1,6 +1,6 @@
 package com.example.arbexcelconverterweb.application;
 
-import com.example.arbexcelconverterweb.domain.ARBFile;
+import com.example.arbexcelconverterweb.domain.arb.ARBFile;
 import com.example.arbexcelconverterweb.presentation.dto.ArbRequest;
 import com.example.arbexcelconverterweb.presentation.dto.ExelResponse;
 import org.springframework.stereotype.Service;
