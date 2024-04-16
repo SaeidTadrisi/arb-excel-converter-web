@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.nio.file.Files.readString;
@@ -16,15 +17,22 @@ import static java.nio.file.Files.readString;
 @Log4j2
 public class ARBFile {
 
-    private List<File> arbFiles;
+    private final List<File> arbFiles;
+    private final String referenceFile;
 
-    public ARBFile(List<File> arbFiles) {
+    public ARBFile(List<File> arbFiles, String referenceFile) {
+        this.referenceFile = referenceFile;
         arbFileCheck(arbFiles);
         this.arbFiles = arbFiles;
 
     }
 
-    public List<String> arbToString() {
+    public List<String> getARBStringFiles() {
+        List<File> sortedList = fileListSorter(arbFiles, referenceFile);
+        return arbToString(sortedList);
+    }
+
+    private List<String> arbToString(List<File> arbFiles) {
         List<String> stringFileList = new ArrayList<>();
 
         for (File file : arbFiles) {
@@ -33,6 +41,18 @@ public class ARBFile {
             stringFileList.add(stringFile);
         }
         return stringFileList;
+    }
+    private List<File> fileListSorter(List<File> arbFiles, String referenceFile) {
+        List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles));
+        List<File> sortedList = new LinkedList<>();
+        for (File file : arbFiles) {
+            if (file.getName().equals(referenceFile)) {
+                sortedList.add(file);
+                copyOfFileList.remove(file);
+                sortedList.addAll(copyOfFileList);
+            }
+        }
+        return sortedList;
     }
 
     private String getReadString(Path path) {

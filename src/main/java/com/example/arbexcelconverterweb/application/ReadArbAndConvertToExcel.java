@@ -11,8 +11,8 @@ import java.util.List;
 public class ReadArbAndConvertToExcel {
 
     public ExelResponse conventToExcel(ArbRequest arbRequest) {
-        ARBFile arbFile = new ARBFile(arbRequest.getFileList());
-        List<String> strings = arbFile.arbToString();
+        ARBFile arbFile = new ARBFile(arbRequest.getFileList(), "S");
+        List<String> strings = arbFile.getARBStringFiles();
         //
         return new ExelResponse();
         //
