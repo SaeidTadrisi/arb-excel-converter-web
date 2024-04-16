@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 
 import java.io.File;
 import java.util.List;
@@ -63,7 +65,7 @@ class ARBFileShould {
                 }""".replace("\n", "\r\n");;
 
         assertDoesNotThrow(arbFile::arbToString);
-//        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
+        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
 
     }
 
@@ -76,7 +78,7 @@ class ARBFileShould {
     @Test
     void should_create_map_from_simple_elements() {
         SimpleElements simpleElements = new SimpleElements();
-//        Map<String, String> stringMap = simpleElements.otherElementsExtractor(stringFiles.getFirst());
+        Map<String, String> stringMap = simpleElements.otherElementsExtractor(stringFiles.getFirst());
 
         Map<String, String> expectedMap = Map.of("Key", "en"
                 ,"genericUpdate", "Update"
@@ -86,12 +88,23 @@ class ARBFileShould {
                 ,"alert_errors_found", "Errors found Please fix the following errors: {errors}"
                 ,"alert_impersonation_notice", "You are currently impersonating {user} / {id}");
 
-//        assertThat(expectedMap).isEqualTo(stringMap);
+        assertThat(stringMap).isEqualTo(expectedMap);
     }
 
     @Test
     void should_create_map_from_placeholders() throws JSONException {
         PlaceHolders placeHolders = new PlaceHolders();
-        Map<String, Object> stringObjectMap = placeHolders.placeHoldersExtractor(stringFiles.getFirst());
+        Map<String, String> stringObjectMap = placeHolders.placeHoldersExtractor(stringFiles.getFirst());
+
+        Map<String, Object> expectedMap = Map.of("@alert_errors_found$#placeholders$#errors$#type", "String"
+                ,"@alert_errors_found$#placeholders$#errors$#example", "Please fix the following errors: {errors}"
+                ,"@@locale", "en"
+                ,"@alert_impersonation_notice$#placeholders$#id$#type", "String"
+                ,"@alert_impersonation_notice$#placeholders$#id$#example", "You are currently impersonating {user} / {id}"
+                ,"@alert_impersonation_notice$#placeholders$#user$#type", "String"
+                ,"@alert_impersonation_notice$#placeholders$#user$#example", "You are currently impersonating {user} / {id}");
+
+        assertThat(stringObjectMap).isEqualTo(expectedMap);
+
     }
 }

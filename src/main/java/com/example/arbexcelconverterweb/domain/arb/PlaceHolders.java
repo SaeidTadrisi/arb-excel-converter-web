@@ -1,18 +1,22 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
+import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Log4j2
 public class PlaceHolders {
 
-    public Map<String, Object> placeHoldersExtractor(String stringFile) {
+    public Map<String, String> placeHoldersExtractor(String stringFile) {
 
-        Map<String, Object> orderedMap = new LinkedHashMap<>();
+        Map<String, String> orderedMap = new LinkedHashMap<>();
 
         try {
             JSONObject jsonObject = new JSONObject(stringFile);
@@ -26,13 +30,14 @@ public class PlaceHolders {
         return orderedMap;
     }
 
-    private void placeHolderPattern(JSONObject jsonObject, Map<String, Object> orderedMap, String prefix) {
-        for (String key : jsonObject.keySet()) {
+    private void placeHolderPattern(JSONObject jsonObject, Map<String, String> orderedMap, String prefix) {
+        for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
+            String key = it.next();
             Object value = jsonObject.get(key);
             if (value instanceof JSONObject jasonObjectValue) {
                 placeHolderPattern(jasonObjectValue, orderedMap, prefix + key + "$#");
             } else {
-                orderedMap.put(prefix + key, value);
+                orderedMap.put(prefix + key, value.toString());
             }
         }
     }
