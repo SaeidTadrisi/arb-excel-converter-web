@@ -6,8 +6,15 @@ import java.util.Map;
 
 public class ElementsCombiner {
 
-    public Map<String, String> placeHolderTypeReplacer(Map<String, String> simpleElementsMap
-            , Map<String, String> placeHoldersMap) {
+    private final Map<String, String> simpleElementsMap;
+    private final Map<String, String> placeHoldersMap;
+
+    public ElementsCombiner(Map<String, String> simpleElementsMap, Map<String, String> placeHoldersMap) {
+        this.simpleElementsMap = simpleElementsMap;
+        this.placeHoldersMap = placeHoldersMap;
+    }
+
+    public Map<String, String> placeHolderTypeReplacer() {
 
         Map<String, String> combinedMap = mapsCombiner(simpleElementsMap, placeHoldersMap);
 

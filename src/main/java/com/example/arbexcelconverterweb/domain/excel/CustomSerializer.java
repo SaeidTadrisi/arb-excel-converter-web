@@ -1,4 +1,4 @@
-package com.example.arbexcelconverterweb.domain;
+package com.example.arbexcelconverterweb.domain.excel;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

@@ -15,22 +15,22 @@ import java.util.List;
 import static java.nio.file.Files.readString;
 
 @Log4j2
-public class ARBFile {
+public class ARBReader {
 
     private final List<File> arbFiles;
     private final String referenceFile;
 
-    public ARBFile(List<File> arbFiles, String referenceFile) {
-        this.referenceFile = referenceFile;
+    public ARBReader(List<File> arbFiles, String referenceFile) {
         arbFileCheck(arbFiles);
+        this.referenceFile = referenceFile;
         this.arbFiles = arbFiles;
-
     }
 
     public List<String> getARBStringFiles() {
         List<File> sortedList = fileListSorter(arbFiles, referenceFile);
         return arbToString(sortedList);
     }
+
 
     private List<String> arbToString(List<File> arbFiles) {
         List<String> stringFileList = new ArrayList<>();
@@ -42,6 +42,7 @@ public class ARBFile {
         }
         return stringFileList;
     }
+
     private List<File> fileListSorter(List<File> arbFiles, String referenceFile) {
         List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles));
         List<File> sortedList = new LinkedList<>();
