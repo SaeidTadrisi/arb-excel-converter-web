@@ -27,8 +27,8 @@ class ARBFileShould {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ARBFile(List.of(file));
-        stringFiles = arbFile.arbToString();
+        arbFile = new ARBFile(List.of(file), "intl_en_test.arb");
+        stringFiles = arbFile.getARBStringFiles();
 
         SimpleElements simpleElements = new SimpleElements();
         simpleMap = simpleElements.otherElementsExtractor(stringFiles.getFirst());
@@ -70,7 +70,7 @@ class ARBFileShould {
                   }
                 }""".replace("\n", "\r\n");;
 
-        assertDoesNotThrow(arbFile::arbToString);
+        assertDoesNotThrow(arbFile::getARBStringFiles);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
 
     }
@@ -78,7 +78,7 @@ class ARBFileShould {
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of(file)));
+        assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of(file), "test.txt"));
     }
 
     @Test
@@ -126,5 +126,48 @@ class ARBFileShould {
                 "@alert_impersonation_notice$#placeholders$#user$#type$#String$#example", "You are currently impersonating {user} / {id}");
 
         assertThat(combinedMap).isEqualTo(expectedMap);
+    }
+
+    @Test
+    void should_sort_files_according_to_reference_file() {
+
+        File file1 = new File("intl_en_test.arb");
+        File file2 = new File("intl_es_test.arb");
+        ARBFile arbFiles = new ARBFile(List.of(file1, file2), "intl_es_test.arb");
+        List<String> stringFiles = arbFiles.getARBStringFiles();
+
+        String outputFile = """
+                {
+                  "@@locale": "es",
+                  "genericUpdate": "Actualizar",
+                  "profileBiography": "Biografía",
+                  "profileBioEmptyMessage": "¡Ayuda a la comunidad a conocerte mejor!",
+                  "profileUpdateError": "No se pudo actualizar el perfil, ¿estás conectado a Internet?",
+                  "alert_errors_found": "Errores encontrados Corrija los siguientes errores: {errors}",
+                  "@alert_errors_found": {
+                    "placeholders": {
+                      "errors": {
+                        "type": "String",
+                        "example": "Please fix the following errors: {errors}"
+                      }
+                    }
+                  },
+                  "alert_impersonation_notice": "Actualmente estás haciéndote pasar por {user} / {id}",
+                  "@alert_impersonation_notice": {
+                    "placeholders": {
+                      "id": {
+                        "type": "String",
+                        "example": "You are currently impersonating {user} / {id}"
+                      },
+                      "user": {
+                        "type": "String",
+                        "example": "You are currently impersonating {user} / {id}"
+                      }
+                    }
+                  }
+                }""".replace("\n", "\r\n");
+
+        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
+
     }
 }
