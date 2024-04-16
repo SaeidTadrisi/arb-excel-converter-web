@@ -14,7 +14,13 @@ import java.util.Map;
 @Log4j2
 public class PlaceHolders {
 
-    public Map<String, String> placeHoldersExtractor(String stringFile) {
+    private final String stringFile;
+
+    public PlaceHolders(String stringFile) {
+        this.stringFile = stringFile;
+    }
+
+    public Map<String, String> placeHoldersExtractor() {
 
         Map<String, String> orderedMap = new LinkedHashMap<>();
 

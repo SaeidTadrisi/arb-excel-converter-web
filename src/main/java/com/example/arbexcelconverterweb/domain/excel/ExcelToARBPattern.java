@@ -1,5 +1,6 @@
-package com.example.arbexcelconverterweb.domain;
+package com.example.arbexcelconverterweb.domain.excel;
 
+import com.example.arbexcelconverterweb.domain.excel.CustomSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

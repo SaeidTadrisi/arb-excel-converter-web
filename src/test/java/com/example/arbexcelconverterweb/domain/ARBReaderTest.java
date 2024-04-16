@@ -1,9 +1,6 @@
 package com.example.arbexcelconverterweb.domain;
 
-import com.example.arbexcelconverterweb.domain.arb.ARBFile;
-import com.example.arbexcelconverterweb.domain.arb.ElementsCombiner;
-import com.example.arbexcelconverterweb.domain.arb.PlaceHolders;
-import com.example.arbexcelconverterweb.domain.arb.SimpleElements;
+import com.example.arbexcelconverterweb.domain.arb.*;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,24 +14,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ARBFileShould {
+class ARBReaderTest {
 
     List<String> stringFiles;
-    ARBFile arbFile;
+    ARBReader arbReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
+    Map<String, String> combinedMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ARBFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbFile.getARBStringFiles();
+        arbReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        stringFiles = arbReader.getARBStringFiles();
 
-        SimpleElements simpleElements = new SimpleElements();
-        simpleMap = simpleElements.otherElementsExtractor(stringFiles.getFirst());
+        SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
+        simpleMap = simpleElements.otherElementsExtractor();
 
-        PlaceHolders placeHolders = new PlaceHolders();
-        placeHolderMap = placeHolders.placeHoldersExtractor(stringFiles.getFirst());
+        PlaceHolders placeHolders = new PlaceHolders(stringFiles.getFirst());
+        placeHolderMap = placeHolders.placeHoldersExtractor();
+
+        ElementsCombiner elementsCombiner = new ElementsCombiner(simpleMap, placeHolderMap);
+        combinedMap = elementsCombiner.placeHolderTypeReplacer();
     }
 
     @Test
@@ -70,7 +71,7 @@ class ARBFileShould {
                   }
                 }""".replace("\n", "\r\n");;
 
-        assertDoesNotThrow(arbFile::getARBStringFiles);
+        assertDoesNotThrow(arbReader::getARBStringFiles);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
 
     }
@@ -78,7 +79,7 @@ class ARBFileShould {
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new ARBFile(List.of(file), "test.txt"));
+        assertThrows(InvalidFileExtensionException.class, () -> new ARBReader(List.of(file), "test.txt"));
     }
 
     @Test
@@ -109,10 +110,6 @@ class ARBFileShould {
 
     @Test
     void should_combine_simple_elements_and_placeholder_maps() {
-        ElementsCombiner elementsCombiner = new ElementsCombiner();
-
-        Map<String, String> combinedMap = elementsCombiner.placeHolderTypeReplacer(simpleMap, placeHolderMap);
-
         Map<String, Object> expectedMap = Map.of(
                 "Key", "en",
                 "genericUpdate", "Update",
@@ -124,7 +121,6 @@ class ARBFileShould {
                 "alert_impersonation_notice", "You are currently impersonating {user} / {id}",
                 "@alert_impersonation_notice$#placeholders$#id$#type$#String$#example", "You are currently impersonating {user} / {id}",
                 "@alert_impersonation_notice$#placeholders$#user$#type$#String$#example", "You are currently impersonating {user} / {id}");
-
         assertThat(combinedMap).isEqualTo(expectedMap);
     }
 
@@ -133,7 +129,7 @@ class ARBFileShould {
 
         File file1 = new File("intl_en_test.arb");
         File file2 = new File("intl_es_test.arb");
-        ARBFile arbFiles = new ARBFile(List.of(file1, file2), "intl_es_test.arb");
+        ARBReader arbFiles = new ARBReader(List.of(file1, file2), "intl_es_test.arb");
         List<String> stringFiles = arbFiles.getARBStringFiles();
 
         String outputFile = """
@@ -168,6 +164,12 @@ class ARBFileShould {
                 }""".replace("\n", "\r\n");
 
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
+    }
 
+    @Test
+    void should_export_an_excel() {
+        List<Map<String, String>> maps = List.of(combinedMap);
+        ExcelWriter excelWriter = new ExcelWriter(maps);
+        excelWriter.exportExcelFile();
     }
 }

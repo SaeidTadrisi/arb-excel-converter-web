@@ -5,9 +5,15 @@ import java.util.Map;
 
 public class SimpleElements {
 
-    public Map<String, String> otherElementsExtractor(String stringFile) {
-        Map<String, String> stringMap = new LinkedHashMap<>();
+    private final String stringFile;
 
+    public SimpleElements(String stringFile) {
+        this.stringFile = stringFile;
+
+    }
+
+    public Map<String, String> otherElementsExtractor() {
+        Map<String, String> stringMap = new LinkedHashMap<>();
         String[] lines = stringFile.split("\n");
 
         for (String line : lines) {
