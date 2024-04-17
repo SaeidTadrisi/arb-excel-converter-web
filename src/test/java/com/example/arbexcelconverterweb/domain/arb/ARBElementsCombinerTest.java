@@ -31,7 +31,7 @@ class ARBElementsCombinerTest {
         placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
 
         ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
-        combinedMap = ARBElementsCombiner.placeHolderTypeReplacer();
+        combinedMap = ARBElementsCombiner.finalPatternedMap();
     }
 
     @Test
