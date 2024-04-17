@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Log4j2
 public class PlaceHolders {
-
+    //todo use property
     private final String stringFile;
 
     public PlaceHolders(String stringFile) {
