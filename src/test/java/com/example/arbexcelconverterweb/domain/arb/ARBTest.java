@@ -67,7 +67,7 @@ class ARBTest {
                       }
                     }
                   }
-                }""".replace("\n", "\r\n");;
+                }""";
 
         assertDoesNotThrow(arbFile::getARBStringFiles);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
@@ -116,7 +116,7 @@ class ARBTest {
                       }
                     }
                   }
-                }""".replace("\n", "\r\n");
+                }""";
 
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
     }
