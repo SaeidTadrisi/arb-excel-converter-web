@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-class ARBToExcelWriterTest {
+class ExcelWriterTest {
 
     List<String> stringFiles;
     ARBReader ARBReader;
@@ -28,14 +28,14 @@ class ARBToExcelWriterTest {
         placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
 
         ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
-        combinedMap = ARBElementsCombiner.placeHolderTypeReplacer();
+        combinedMap = ARBElementsCombiner.finalPatternedMap();
     }
 
     @Test
     void should_export_an_excel() {
         List<Map<String, String>> maps = List.of(combinedMap);
-        ARBToExcelWriter ARBToExcelWriter = new ARBToExcelWriter(maps);
-        ARBToExcelWriter.exportExcelFile();
+        ExcelWriter ExcelWriter = new ExcelWriter(maps);
+        ExcelWriter.exportExcelFile();
     }
 
 }

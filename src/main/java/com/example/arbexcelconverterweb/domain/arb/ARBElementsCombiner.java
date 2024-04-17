@@ -14,7 +14,7 @@ public class ARBElementsCombiner {
         this.placeHoldersMap = placeHoldersMap;
     }
 
-    public Map<String, String> placeHolderTypeReplacer() {
+    public Map<String, String> finalPatternedMap() {
 
         Map<String, String> combinedMap = mapsCombiner(simpleElementsMap, placeHoldersMap);
 

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ExcelTest {
+public class ExcelReaderTest {
 
     @Test
     void should_convert_excel_file_to_string() {

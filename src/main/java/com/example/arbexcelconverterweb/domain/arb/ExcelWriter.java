@@ -1,6 +1,7 @@
-package com.example.arbexcelconverterweb.domain;
+package com.example.arbexcelconverterweb.domain.arb;
 
 import com.example.arbexcelconverterweb.domain.exception.FileInUseException;
+import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -9,32 +10,26 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class ExportWriter {
+import static java.lang.System.getProperty;
+@Log4j2
+public class ExcelWriter {
+    private final List<Map<String, String>> combinedMap;
+    private final String userPath = getProperty("user.home") + File.separator;
 
-    String userPath = System.getProperty("user.home") + File.separator;
-
-    public void arbFileWriter(Map<String, String> arbMap) {
-        for (Map.Entry<String, String> languagesMap : arbMap.entrySet()) {
-            File outputFile = new File(userPath, languagesMap.getKey() + ".arb");
-            try (FileWriter fileWriter = new FileWriter(outputFile)) {
-                fileWriter.write(languagesMap.getValue());
-            } catch (IOException e) {
-                throw new IllegalArgumentException("No write permissions for the directory.");
-            }
-        }
+    public ExcelWriter(List<Map<String, String>> combinedMap) {
+        this.combinedMap = combinedMap;
     }
 
-    public void excelFileWriter(List<Map<String, String>> excelListMap) {
+    public void exportExcelFile() {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Data");
             int colIdx = 0;
-            for (int mapIdx = 0; mapIdx < excelListMap.size(); mapIdx++) {
-                Map<String, String> map = excelListMap.get(mapIdx);
+            for (int mapIdx = 0; mapIdx < combinedMap.size(); mapIdx++) {
+                Map<String, String> map = combinedMap.get(mapIdx);
 
                 int rowIdx = 0;
                 if (mapIdx == 0) {
@@ -70,7 +65,7 @@ public class ExportWriter {
                 workbook.write(fileOutputStream);
             }
         } catch (FileInUseException | IOException e) {
-            throw new IllegalArgumentException("You haven't permission or Excel file is open.");
+            log.error("You haven't permission or Excel file is open.");
         }
     }
 }

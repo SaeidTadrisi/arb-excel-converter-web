@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ARBTest {
+class ARBReaderTest {
 
     List<String> stringFiles;
     ARBReader ARBReader;
@@ -33,7 +33,7 @@ class ARBTest {
         placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
 
         ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
-        combinedMap = ARBElementsCombiner.placeHolderTypeReplacer();
+        combinedMap = ARBElementsCombiner.finalPatternedMap();
     }
 
     @Test
