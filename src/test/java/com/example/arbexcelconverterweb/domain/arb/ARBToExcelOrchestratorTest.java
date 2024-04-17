@@ -16,7 +16,7 @@ class ARBToExcelOrchestratorTest {
                 new File("intl_es.arb"),
                 new File("intl_fr.arb"));
 
-        String referenceFile = "intl_fr.arb";
+        String referenceFile = "intl_es.arb";
 
 
         ARBToExcelOrchestrator arbToExcelOrchestrator = new ARBToExcelOrchestrator(fileList, referenceFile);

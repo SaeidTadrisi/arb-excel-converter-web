@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.file.Files.readString;
 
@@ -26,35 +27,28 @@ public class ARBReader {
         this.arbFiles = arbFiles;
     }
 
-    public List<String> getARBStringFiles() {
+    List<String> getARBStringFiles() {
         List<File> sortedList = fileListSorter(arbFiles, referenceFile);
         return arbToString(sortedList);
     }
 
-
     private List<String> arbToString(List<File> arbFiles) {
-        List<String> stringFileList = new ArrayList<>();
-
-        for (File file : arbFiles) {
-            Path path = Paths.get(file.getAbsolutePath());
-            String stringFile = getReadString(path);
-            stringFileList.add(stringFile);
-        }
-        return stringFileList;
+        return arbFiles.stream().map(File::getAbsolutePath)
+                .map(Paths::get)
+                .map(this::getReadString)
+                .toList();
     }
 
     private List<File> fileListSorter(List<File> arbFiles, String referenceFile) {
-        //todo
-        // List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles)); in code ro jahae ziyade estefade shode
         List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles));
         List<File> sortedList = new LinkedList<>();
-        for (File file : arbFiles) {
-            if (file.getName().equals(referenceFile)) {
-                sortedList.add(file);
-                copyOfFileList.remove(file);
-                sortedList.addAll(copyOfFileList);
-            }
-        }
+        arbFiles.stream()
+                .filter(file -> file.getName().equals(referenceFile))
+                .forEach(file -> {
+                    sortedList.add(file);
+                    copyOfFileList.remove(file);
+                    sortedList.addAll(copyOfFileList);
+                });
         return sortedList;
     }
 

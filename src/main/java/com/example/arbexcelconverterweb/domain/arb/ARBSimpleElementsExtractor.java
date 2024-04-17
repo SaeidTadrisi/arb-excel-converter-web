@@ -12,7 +12,7 @@ public class ARBSimpleElementsExtractor {
 
     }
 
-    public Map<String, String> otherElementsExtractor() {
+    Map<String, String> otherElementsExtractor() {
         Map<String, String> stringMap = new LinkedHashMap<>();
         String[] lines = stringFile.split("\n");
 

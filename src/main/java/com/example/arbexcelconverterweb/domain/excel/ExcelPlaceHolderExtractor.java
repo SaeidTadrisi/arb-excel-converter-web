@@ -12,7 +12,7 @@ public class ExcelPlaceHolderExtractor {
         this.eachLanguageMap = eachLanguageMap;
     }
 
-    public Map<String, String> placeHoldersExtractor(){
+    Map<String, String> placeHoldersExtractor(){
         Map<String, String> placeHoldersMap = new LinkedHashMap<>();
 
         for (Map.Entry<String, String> entry : eachLanguageMap.entrySet()){

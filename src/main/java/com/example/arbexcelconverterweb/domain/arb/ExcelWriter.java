@@ -24,7 +24,7 @@ public class ExcelWriter {
         this.combinedMap = combinedMap;
     }
 
-    public void exportExcelFile() {
+    void exportExcelFile() {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Data");
             int colIdx = 0;

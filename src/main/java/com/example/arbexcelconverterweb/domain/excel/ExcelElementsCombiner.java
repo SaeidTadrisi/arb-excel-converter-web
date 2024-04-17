@@ -18,7 +18,7 @@ public class ExcelElementsCombiner {
         this.placeHolderMap = placeHolderMap;
     }
 
-    public String arbPatternedMap() {
+    String arbPatternedMap() {
         Map<String, Object> stringObjectMap = arbPatternCreator();
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()

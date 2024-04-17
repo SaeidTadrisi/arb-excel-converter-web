@@ -14,7 +14,7 @@ public class ARBWriter {
         this.arbMap = arbMap;
     }
 
-    public void arbFileWriter() {
+    void arbFileWriter() {
         for (Map.Entry<String, String> languagesMap : arbMap.entrySet()) {
             File outputFile = new File(userPath, languagesMap.getKey() + ".arb");
             try (FileWriter fileWriter = new FileWriter(outputFile)) {

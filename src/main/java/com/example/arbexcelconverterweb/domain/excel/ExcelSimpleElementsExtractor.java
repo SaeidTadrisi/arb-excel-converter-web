@@ -12,7 +12,7 @@ public class ExcelSimpleElementsExtractor {
         this.eachLanguageMap = eachLanguageMap;
     }
 
-    public Map<String, String> otherElementsExtractor(){
+    Map<String, String> otherElementsExtractor(){
         Map<String, String> otherElementsMap = new LinkedHashMap<>();
 
         for (Map.Entry<String, String> entry : eachLanguageMap.entrySet()){
