@@ -15,12 +15,12 @@ import java.util.List;
 import static java.nio.file.Files.readString;
 
 @Log4j2
-public class ArbFile {
+public class ARBReader {
 
     private final List<File> arbFiles;
     private final String referenceFile;
 
-    public ArbFile(List<File> arbFiles, String referenceFile) {
+    public ARBReader(List<File> arbFiles, String referenceFile) {
         arbFileCheck(arbFiles);
         this.referenceFile = referenceFile;
         this.arbFiles = arbFiles;

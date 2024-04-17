@@ -3,11 +3,11 @@ package com.example.arbexcelconverterweb.domain.arb;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SimpleElements {
+public class ARBSimpleElementsExtractor {
 
     private final String stringFile;
 
-    public SimpleElements(String stringFile) {
+    public ARBSimpleElementsExtractor(String stringFile) {
         this.stringFile = stringFile;
 
     }

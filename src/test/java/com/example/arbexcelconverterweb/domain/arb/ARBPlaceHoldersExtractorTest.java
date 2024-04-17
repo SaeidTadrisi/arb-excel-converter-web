@@ -10,20 +10,20 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlaceHoldersTest {
+class ARBPlaceHoldersExtractorTest {
 
     List<String> stringFiles;
-    ArbFile arbFile;
+    ARBReader ARBReader;
     Map<String, String> placeHolderMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbFile.getARBStringFiles();
+        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        stringFiles = ARBReader.getARBStringFiles();
 
-        PlaceHolders placeHolders = new PlaceHolders(stringFiles.getFirst());
-        placeHolderMap = placeHolders.placeHoldersExtractor();
+        ARBPlaceHoldersExtractor ARBPlaceHoldersExtractor = new ARBPlaceHoldersExtractor(stringFiles.getFirst());
+        placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
     }
 
     @Test

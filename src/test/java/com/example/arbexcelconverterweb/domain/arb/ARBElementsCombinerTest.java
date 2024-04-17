@@ -9,11 +9,11 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ElementsCombinerTest {
+class ARBElementsCombinerTest {
 
 
     List<String> stringFiles;
-    ArbFile arbFile;
+    ARBReader ARBReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -21,17 +21,17 @@ class ElementsCombinerTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbFile.getARBStringFiles();
+        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        stringFiles = ARBReader.getARBStringFiles();
 
-        SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
-        simpleMap = simpleElements.otherElementsExtractor();
+        ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
+        simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
 
-        PlaceHolders placeHolders = new PlaceHolders(stringFiles.getFirst());
-        placeHolderMap = placeHolders.placeHoldersExtractor();
+        ARBPlaceHoldersExtractor ARBPlaceHoldersExtractor = new ARBPlaceHoldersExtractor(stringFiles.getFirst());
+        placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
 
-        ElementsCombiner elementsCombiner = new ElementsCombiner(simpleMap, placeHolderMap);
-        combinedMap = elementsCombiner.placeHolderTypeReplacer();
+        ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
+        combinedMap = ARBElementsCombiner.placeHolderTypeReplacer();
     }
 
     @Test

@@ -4,12 +4,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ElementsCombiner {
+public class ARBElementsCombiner {
 
     private final Map<String, String> simpleElementsMap;
     private final Map<String, String> placeHoldersMap;
 
-    public ElementsCombiner(Map<String, String> simpleElementsMap, Map<String, String> placeHoldersMap) {
+    public ARBElementsCombiner(Map<String, String> simpleElementsMap, Map<String, String> placeHoldersMap) {
         this.simpleElementsMap = simpleElementsMap;
         this.placeHoldersMap = placeHoldersMap;
     }

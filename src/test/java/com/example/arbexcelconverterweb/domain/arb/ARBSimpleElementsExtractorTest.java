@@ -9,20 +9,20 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SimpleElementsTest {
+class ARBSimpleElementsExtractorTest {
 
     List<String> stringFiles;
-    ArbFile arbFile;
+    ARBReader ARBReader;
     Map<String, String> simpleMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbFile.getARBStringFiles();
+        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        stringFiles = ARBReader.getARBStringFiles();
 
-        SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
-        simpleMap = simpleElements.otherElementsExtractor();
+        ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
+        simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
     }
 
     @Test
