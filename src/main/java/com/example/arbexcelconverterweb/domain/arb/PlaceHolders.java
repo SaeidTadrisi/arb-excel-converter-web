@@ -1,11 +1,8 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
-import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -13,7 +10,7 @@ import java.util.Map;
 
 @Log4j2
 public class PlaceHolders {
-
+    //todo use property
     private final String stringFile;
 
     public PlaceHolders(String stringFile) {

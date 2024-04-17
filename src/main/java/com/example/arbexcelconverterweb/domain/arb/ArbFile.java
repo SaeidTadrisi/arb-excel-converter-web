@@ -15,12 +15,12 @@ import java.util.List;
 import static java.nio.file.Files.readString;
 
 @Log4j2
-public class ARBReader {
+public class ArbFile {
 
     private final List<File> arbFiles;
     private final String referenceFile;
 
-    public ARBReader(List<File> arbFiles, String referenceFile) {
+    public ArbFile(List<File> arbFiles, String referenceFile) {
         arbFileCheck(arbFiles);
         this.referenceFile = referenceFile;
         this.arbFiles = arbFiles;
@@ -44,6 +44,8 @@ public class ARBReader {
     }
 
     private List<File> fileListSorter(List<File> arbFiles, String referenceFile) {
+        //todo
+        // List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles)); in code ro jahae ziyade estefade shode
         List<File> copyOfFileList = new LinkedList<>(List.copyOf(arbFiles));
         List<File> sortedList = new LinkedList<>();
         for (File file : arbFiles) {
