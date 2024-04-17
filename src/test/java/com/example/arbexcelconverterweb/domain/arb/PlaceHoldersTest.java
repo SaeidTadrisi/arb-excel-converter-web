@@ -9,19 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlaceHoldersTest {
 
     List<String> stringFiles;
-    ARBReader arbReader;
+    ArbFile arbFile;
     Map<String, String> placeHolderMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = arbReader.getARBStringFiles();
+        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
+        stringFiles = arbFile.getARBStringFiles();
 
         PlaceHolders placeHolders = new PlaceHolders(stringFiles.getFirst());
         placeHolderMap = placeHolders.placeHoldersExtractor();

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ARBTest {
 
     List<String> stringFiles;
-    ArbFile arbReader;
+    ArbFile arbFile;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -23,8 +23,8 @@ class ARBTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbReader = new ArbFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbReader.getARBStringFiles();
+        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
+        stringFiles = arbFile.getARBStringFiles();
 
         SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
         simpleMap = simpleElements.otherElementsExtractor();
@@ -69,7 +69,7 @@ class ARBTest {
                   }
                 }""".replace("\n", "\r\n");;
 
-        assertDoesNotThrow(arbReader::getARBStringFiles);
+        assertDoesNotThrow(arbFile::getARBStringFiles);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
     }
 
