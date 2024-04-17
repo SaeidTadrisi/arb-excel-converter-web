@@ -13,7 +13,7 @@ class ElementsCombinerTest {
 
 
     List<String> stringFiles;
-    ARBReader arbReader;
+    ArbFile arbFile;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -21,8 +21,8 @@ class ElementsCombinerTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = arbReader.getARBStringFiles();
+        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
+        stringFiles = arbFile.getARBStringFiles();
 
         SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
         simpleMap = simpleElements.otherElementsExtractor();

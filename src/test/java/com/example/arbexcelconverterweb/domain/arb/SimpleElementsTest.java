@@ -8,19 +8,18 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleElementsTest {
 
     List<String> stringFiles;
-    ARBReader arbReader;
+    ArbFile arbFile;
     Map<String, String> simpleMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = arbReader.getARBStringFiles();
+        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
+        stringFiles = arbFile.getARBStringFiles();
 
         SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
         simpleMap = simpleElements.otherElementsExtractor();
