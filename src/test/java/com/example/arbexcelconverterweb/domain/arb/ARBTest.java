@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ARBTest {
 
     List<String> stringFiles;
-    ARBReader arbReader;
+    ArbFile arbReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -23,7 +23,7 @@ class ARBTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        arbReader = new ArbFile(List.of(file), "intl_en_test.arb");
         stringFiles = arbReader.getARBStringFiles();
 
         SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
@@ -76,7 +76,7 @@ class ARBTest {
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new ARBReader(List.of(file), "test.txt"));
+        assertThrows(InvalidFileExtensionException.class, () -> new ArbFile(List.of(file), "test.txt"));
     }
 
     @Test
@@ -84,7 +84,7 @@ class ARBTest {
 
         File file1 = new File("intl_en_test.arb");
         File file2 = new File("intl_es_test.arb");
-        ARBReader arbFiles = new ARBReader(List.of(file1, file2), "intl_es_test.arb");
+        ArbFile arbFiles = new ArbFile(List.of(file1, file2), "intl_es_test.arb");
         List<String> stringFiles = arbFiles.getARBStringFiles();
 
         String outputFile = """
