@@ -9,11 +9,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Log4j2
-public class PlaceHolders {
+public class ARBPlaceHoldersExtractor {
     //todo use property
     private final String stringFile;
 
-    public PlaceHolders(String stringFile) {
+    public ARBPlaceHoldersExtractor(String stringFile) {
         this.stringFile = stringFile;
     }
 

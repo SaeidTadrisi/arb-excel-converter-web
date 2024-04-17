@@ -16,11 +16,11 @@ import java.util.Map;
 
 import static java.lang.System.getProperty;
 @Log4j2
-public class ExcelWriter {
+public class ARBToExcelWriter {
     private final List<Map<String, String>> combinedMap;
     private final String userPath = getProperty("user.home") + File.separator;
 
-    public ExcelWriter(List<Map<String, String>> combinedMap) {
+    public ARBToExcelWriter(List<Map<String, String>> combinedMap) {
         this.combinedMap = combinedMap;
     }
 

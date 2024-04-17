@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ARBTest {
 
     List<String> stringFiles;
-    ArbFile arbFile;
+    ARBReader ARBReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -23,17 +23,17 @@ class ARBTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        arbFile = new ArbFile(List.of(file), "intl_en_test.arb");
-        stringFiles = arbFile.getARBStringFiles();
+        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
+        stringFiles = ARBReader.getARBStringFiles();
 
-        SimpleElements simpleElements = new SimpleElements(stringFiles.getFirst());
-        simpleMap = simpleElements.otherElementsExtractor();
+        ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
+        simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
 
-        PlaceHolders placeHolders = new PlaceHolders(stringFiles.getFirst());
-        placeHolderMap = placeHolders.placeHoldersExtractor();
+        ARBPlaceHoldersExtractor ARBPlaceHoldersExtractor = new ARBPlaceHoldersExtractor(stringFiles.getFirst());
+        placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
 
-        ElementsCombiner elementsCombiner = new ElementsCombiner(simpleMap, placeHolderMap);
-        combinedMap = elementsCombiner.placeHolderTypeReplacer();
+        ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
+        combinedMap = ARBElementsCombiner.placeHolderTypeReplacer();
     }
 
     @Test
@@ -67,16 +67,16 @@ class ARBTest {
                       }
                     }
                   }
-                }""";
+                }""".replace("\n", "\r\n");
 
-        assertDoesNotThrow(arbFile::getARBStringFiles);
+        assertDoesNotThrow(ARBReader::getARBStringFiles);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
     }
 
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new ArbFile(List.of(file), "test.txt"));
+        assertThrows(InvalidFileExtensionException.class, () -> new ARBReader(List.of(file), "test.txt"));
     }
 
     @Test
@@ -84,7 +84,7 @@ class ARBTest {
 
         File file1 = new File("intl_en_test.arb");
         File file2 = new File("intl_es_test.arb");
-        ArbFile arbFiles = new ArbFile(List.of(file1, file2), "intl_es_test.arb");
+        ARBReader arbFiles = new ARBReader(List.of(file1, file2), "intl_es_test.arb");
         List<String> stringFiles = arbFiles.getARBStringFiles();
 
         String outputFile = """
@@ -116,7 +116,7 @@ class ARBTest {
                       }
                     }
                   }
-                }""";
+                }""".replace("\n", "\r\n");
 
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
     }
