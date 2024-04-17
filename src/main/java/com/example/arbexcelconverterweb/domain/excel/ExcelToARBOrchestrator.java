@@ -12,7 +12,7 @@ public class ExcelToARBOrchestrator {
         this.excelFile = excelFile;
     }
 
-    public void getArbFiles(){
+    void getArbFiles(){
         ExcelReader excelReader = new ExcelReader(excelFile);
         Map<String, Map<String, String>> excelStringFile = excelReader.getExcelStringFile();
         LinkedHashMap<String, String> collect = excelStringFile.entrySet().stream()

@@ -24,7 +24,7 @@ public class ExcelReader {
         xlsFileCheck(excelFile);
     }
 
-    public Map<String, Map<String, String>> getExcelStringFile() {
+    Map<String, Map<String, String>> getExcelStringFile() {
         Map<String, Map<String, String>> importData = new LinkedHashMap<>();
         InputStream excelInputStream = getExcelFile();
 
