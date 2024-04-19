@@ -1,5 +1,6 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
+import com.example.arbexcelconverterweb.application.FilesReader;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ARBPlaceHoldersExtractorTest {
 
     List<String> stringFiles;
-    ARBReader ARBReader;
     Map<String, String> placeHolderMap;
 
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = ARBReader.getARBStringFiles();
+        stringFiles = new FakeFilesReader().read();
 
-        ARBPlaceHoldersExtractor ARBPlaceHoldersExtractor = new ARBPlaceHoldersExtractor(stringFiles.getFirst());
+        var ARBPlaceHoldersExtractor = new ARBPlaceHoldersExtractor(stringFiles.getFirst());
         placeHolderMap = ARBPlaceHoldersExtractor.placeHoldersExtractor();
     }
 

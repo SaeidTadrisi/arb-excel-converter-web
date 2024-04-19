@@ -12,10 +12,18 @@ import java.util.List;
 
 import static java.nio.file.Files.readString;
 
-public class FilesReaderImpl implements FilesReader {
+public class TextReaderImpl implements FilesReader {
+
+    List<File> fileList;
+    String referenceFile;
+
+    public TextReaderImpl(List<File> fileList, String referenceFile) {
+        this.fileList = fileList;
+        this.referenceFile = referenceFile;
+    }
 
     @Override
-    public List<String> read(List<File> fileList, String referenceFile) {
+    public List<String> read() {
         List<File> sortedList = fileListSorter(fileList, referenceFile);
         return arbToString(sortedList);
     }
