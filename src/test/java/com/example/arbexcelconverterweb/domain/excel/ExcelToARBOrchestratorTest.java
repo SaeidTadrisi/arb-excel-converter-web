@@ -9,7 +9,8 @@ class ExcelToARBOrchestratorTest {
     @Test
     void should_make_output() {
 
-        ExcelToARBOrchestrator excelToARBOrchestrator = new ExcelToARBOrchestrator(new File("output.xlsx"));
+
+        ExcelToARBOrchestrator excelToARBOrchestrator = new ExcelToARBOrchestrator(new FakeExcelReader().read());
         excelToARBOrchestrator.getArbFiles();
     }
 }

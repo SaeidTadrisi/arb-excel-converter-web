@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ARBReaderTest {
+class ARBReaderImplTest {
 
     List<String> stringFiles;
     FilesReader filesReader;
@@ -37,12 +37,6 @@ class ARBReaderTest {
 
         ARBElementsCombiner ARBElementsCombiner = new ARBElementsCombiner(simpleMap, placeHolderMap);
         combinedMap = ARBElementsCombiner.finalPatternedMap();
-    }
-
-    @Test
-    void name() {
-
-        System.out.println(stringFiles);
     }
 
     @Test
