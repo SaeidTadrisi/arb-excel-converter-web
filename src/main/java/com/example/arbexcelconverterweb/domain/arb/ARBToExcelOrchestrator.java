@@ -13,7 +13,7 @@ public class ARBToExcelOrchestrator {
         this.arbStringFiles = arbStringFiles;
     }
 
-    public void getExcelFile(){
+    public File getExcelFile(){
             List<Map<String, String>> mapList = new LinkedList<>();
             for (String arb : arbStringFiles) {
                 Map<String, String> otherElementsMap = new ARBSimpleElementsExtractor(arb).otherElementsExtractor();
@@ -21,8 +21,7 @@ public class ARBToExcelOrchestrator {
                 Map<String, String> combinedMap = new ARBElementsCombiner(otherElementsMap, placeHoldersMap).finalPatternedMap();
                 mapList.add(combinedMap);
             }
-
-        ExcelWriter excelWriter = new ExcelWriter(mapList);
-            excelWriter.exportExcelFile();
+            ExcelWriter excelWriter = new ExcelWriter(mapList);
+            return excelWriter.exportExcelFile();
     }
 }
