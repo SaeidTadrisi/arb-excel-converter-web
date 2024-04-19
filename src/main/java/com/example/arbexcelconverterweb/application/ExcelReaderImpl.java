@@ -1,4 +1,4 @@
-package com.example.arbexcelconverterweb.domain.excel;
+package com.example.arbexcelconverterweb.application;
 
 import com.example.arbexcelconverterweb.domain.exception.FileNotFoundException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
@@ -15,16 +15,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Log4j2
-public class ExcelReader {
+public class ExcelReaderImpl implements ExcelReader{
 
     private final File excelFile;
 
-    public ExcelReader(File excelFile) {
+    public ExcelReaderImpl(File excelFile) {
         this.excelFile = excelFile;
         xlsFileCheck(excelFile);
     }
 
-    Map<String, Map<String, String>> getExcelStringFile() {
+    @Override
+    public Map<String, Map<String, String>> read() {
         Map<String, Map<String, String>> importData = new LinkedHashMap<>();
         InputStream excelInputStream = getExcelFile();
 
