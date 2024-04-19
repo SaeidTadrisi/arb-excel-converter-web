@@ -12,9 +12,8 @@ public class ExcelReaderImplTest {
 
     @Test
     void should_convert_excel_file_to_string() {
-        File file = new File("en.xlsx");
-        ExcelReaderImpl excelReaderImpl = new ExcelReaderImpl(file);
-        Map<String, Map<String, String>> excelStringFile = excelReaderImpl.getExcelStringFile();
+
+        Map<String, Map<String, String>> excelStringFile = new FakeExcelReader().read();
 
         Map<String, Map<String, String>> excpectedMap = Map.of("en", Map.of("Key", "en",
                 "genericUpdate", "Update",

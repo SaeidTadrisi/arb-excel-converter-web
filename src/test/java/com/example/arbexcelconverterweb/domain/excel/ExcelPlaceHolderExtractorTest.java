@@ -15,9 +15,7 @@ class ExcelPlaceHolderExtractorTest {
 
     @BeforeEach
     void setUp() {
-        File file = new File("en.xlsx");
-        ExcelReaderImpl excelReaderImpl = new ExcelReaderImpl(file);
-        Map<String, Map<String, String>> excelStringFile = excelReaderImpl.getExcelStringFile();
+        Map<String, Map<String, String>> excelStringFile = new FakeExcelReader().read();
 
         ExcelPlaceHolderExtractor excelPlaceHolderExtractor = new ExcelPlaceHolderExtractor(excelStringFile.get("en"));
         placeHolderMap = excelPlaceHolderExtractor.placeHoldersExtractor();

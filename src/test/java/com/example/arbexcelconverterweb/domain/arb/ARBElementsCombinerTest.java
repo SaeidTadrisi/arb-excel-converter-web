@@ -32,7 +32,7 @@ class ARBElementsCombinerTest {
 
     @Test
     void should_combine_simple_elements_and_placeholder_maps() {
-        Map<String, Object> expectedMap = Map.of(
+        Map<String, String> expectedMap = Map.of(
                 "Key", "en",
                 "genericUpdate", "Update",
                 "profileBiography", "Biography",

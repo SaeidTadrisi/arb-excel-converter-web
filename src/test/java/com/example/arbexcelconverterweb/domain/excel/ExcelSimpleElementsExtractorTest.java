@@ -15,9 +15,7 @@ class ExcelSimpleElementsExtractorTest {
 
     @BeforeEach
     void setUp() {
-        File file = new File("en.xlsx");
-        ExcelReaderImpl excelReaderImpl = new ExcelReaderImpl(file);
-        Map<String, Map<String, String>> excelStringFile = excelReaderImpl.getExcelStringFile();
+        Map<String, Map<String, String>> excelStringFile = new FakeExcelReader().read();
 
         ExcelSimpleElementsExtractor excelSimpleElementsExtractor =
                 new ExcelSimpleElementsExtractor(excelStringFile.get("en"));
