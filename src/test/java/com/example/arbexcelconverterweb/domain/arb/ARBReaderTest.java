@@ -1,7 +1,7 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
 import com.example.arbexcelconverterweb.application.FilesReader;
-import com.example.arbexcelconverterweb.application.TextReaderImpl;
+import com.example.arbexcelconverterweb.application.FilesReaderImpl;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class ARBReaderTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        filesReader = new TextReaderImpl(List.of(file), "intl_en_test.arb");
+        filesReader = new FilesReaderImpl(List.of(file), "intl_en_test.arb");
         stringFiles = filesReader.read();
 
 
@@ -85,7 +85,7 @@ class ARBReaderTest {
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new TextReaderImpl(List.of(file), "test.txt"));
+        assertThrows(InvalidFileExtensionException.class, () -> new FilesReaderImpl(List.of(file), "test.txt"));
     }
 
     @Test
@@ -93,7 +93,7 @@ class ARBReaderTest {
 
         File file1 = new File("intl_en_test.arb");
         File file2 = new File("intl_es_test.arb");
-        FilesReader arbFiles = new TextReaderImpl(List.of(file1, file2), "intl_es_test.arb");
+        FilesReader arbFiles = new FilesReaderImpl(List.of(file1, file2), "intl_es_test.arb");
         List<String> stringFiles = arbFiles.read();
 
         String outputFile = """

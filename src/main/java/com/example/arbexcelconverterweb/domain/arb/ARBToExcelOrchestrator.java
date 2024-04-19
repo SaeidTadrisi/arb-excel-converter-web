@@ -14,7 +14,6 @@ public class ARBToExcelOrchestrator {
     }
 
     public void getExcelFile(){
-
             List<Map<String, String>> mapList = new LinkedList<>();
             for (String arb : arbStringFiles) {
                 Map<String, String> otherElementsMap = new ARBSimpleElementsExtractor(arb).otherElementsExtractor();

@@ -1,20 +1,21 @@
 package com.example.arbexcelconverterweb.domain.excel;
 
+import com.example.arbexcelconverterweb.application.ExcelReaderImpl;
+
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ExcelToARBOrchestrator {
 
-    private final File excelFile;
+    private final Map<String, Map<String, String>> excelStringFile;
 
-    public ExcelToARBOrchestrator(File excelFile) {
-        this.excelFile = excelFile;
+
+    public ExcelToARBOrchestrator(Map<String, Map<String, String>> excelStringFile) {
+        this.excelStringFile = excelStringFile;
     }
 
     void getArbFiles(){
-        ExcelReader excelReader = new ExcelReader(excelFile);
-        Map<String, Map<String, String>> excelStringFile = excelReader.getExcelStringFile();
         LinkedHashMap<String, String> collect = excelStringFile.entrySet().stream()
                 .collect(LinkedHashMap::new,
                         (stringMap, languagesMapEntry) -> {

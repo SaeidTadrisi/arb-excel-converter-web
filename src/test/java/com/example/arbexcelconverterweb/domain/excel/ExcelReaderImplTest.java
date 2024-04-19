@@ -1,5 +1,6 @@
 package com.example.arbexcelconverterweb.domain.excel;
 
+import com.example.arbexcelconverterweb.application.ExcelReaderImpl;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -7,13 +8,13 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ExcelReaderTest {
+public class ExcelReaderImplTest {
 
     @Test
     void should_convert_excel_file_to_string() {
         File file = new File("en.xlsx");
-        ExcelReader excelReader = new ExcelReader(file);
-        Map<String, Map<String, String>> excelStringFile = excelReader.getExcelStringFile();
+        ExcelReaderImpl excelReaderImpl = new ExcelReaderImpl(file);
+        Map<String, Map<String, String>> excelStringFile = excelReaderImpl.getExcelStringFile();
 
         Map<String, Map<String, String>> excpectedMap = Map.of("en", Map.of("Key", "en",
                 "genericUpdate", "Update",

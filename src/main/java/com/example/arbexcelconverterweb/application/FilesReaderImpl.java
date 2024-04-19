@@ -12,12 +12,12 @@ import java.util.List;
 
 import static java.nio.file.Files.readString;
 
-public class TextReaderImpl implements FilesReader {
+public class FilesReaderImpl implements FilesReader {
 
     List<File> fileList;
     String referenceFile;
 
-    public TextReaderImpl(List<File> fileList, String referenceFile) {
+    public FilesReaderImpl(List<File> fileList, String referenceFile) {
         this.fileList = fileList;
         this.referenceFile = referenceFile;
     }

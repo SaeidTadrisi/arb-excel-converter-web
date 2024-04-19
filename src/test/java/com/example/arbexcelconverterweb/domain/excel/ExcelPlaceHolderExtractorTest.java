@@ -1,6 +1,6 @@
 package com.example.arbexcelconverterweb.domain.excel;
 
-import org.json.JSONException;
+import com.example.arbexcelconverterweb.application.ExcelReaderImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,6 @@ import java.io.File;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ExcelPlaceHolderExtractorTest {
 
@@ -17,8 +16,8 @@ class ExcelPlaceHolderExtractorTest {
     @BeforeEach
     void setUp() {
         File file = new File("en.xlsx");
-        ExcelReader excelReader = new ExcelReader(file);
-        Map<String, Map<String, String>> excelStringFile = excelReader.getExcelStringFile();
+        ExcelReaderImpl excelReaderImpl = new ExcelReaderImpl(file);
+        Map<String, Map<String, String>> excelStringFile = excelReaderImpl.getExcelStringFile();
 
         ExcelPlaceHolderExtractor excelPlaceHolderExtractor = new ExcelPlaceHolderExtractor(excelStringFile.get("en"));
         placeHolderMap = excelPlaceHolderExtractor.placeHoldersExtractor();
