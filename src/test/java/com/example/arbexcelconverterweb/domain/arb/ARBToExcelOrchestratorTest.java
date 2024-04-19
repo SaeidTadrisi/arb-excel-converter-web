@@ -10,16 +10,9 @@ class ARBToExcelOrchestratorTest {
 
     @Test
     void should_make_output() {
+        List<String> stringList = new FakeFilesReader().read();
 
-        List<File> fileList = List.of(
-                new File("intl_en.arb"),
-                new File("intl_es.arb"),
-                new File("intl_fr.arb"));
-
-        String referenceFile = "intl_es.arb";
-
-
-        ARBToExcelOrchestrator arbToExcelOrchestrator = new ARBToExcelOrchestrator(fileList, referenceFile);
+        ARBToExcelOrchestrator arbToExcelOrchestrator = new ARBToExcelOrchestrator(stringList);
         arbToExcelOrchestrator.getExcelFile();
     }
 

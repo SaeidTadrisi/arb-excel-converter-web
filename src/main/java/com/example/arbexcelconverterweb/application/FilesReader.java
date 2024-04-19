@@ -8,5 +8,5 @@ import java.util.List;
 @Service
 public interface FilesReader {
 
-    List<String> read (List<File> fileList, String referenceFile);
+    List<String> read ();
 }

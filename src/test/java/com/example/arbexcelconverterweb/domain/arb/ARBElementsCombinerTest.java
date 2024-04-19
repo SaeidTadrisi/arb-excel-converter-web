@@ -11,18 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ARBElementsCombinerTest {
 
-
     List<String> stringFiles;
-    ARBReader ARBReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
 
     @BeforeEach
     void setUp() {
-        File file = new File("intl_en_test.arb");
-        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = ARBReader.getARBStringFiles();
+        stringFiles = new FakeFilesReader().read();
 
         ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
         simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();

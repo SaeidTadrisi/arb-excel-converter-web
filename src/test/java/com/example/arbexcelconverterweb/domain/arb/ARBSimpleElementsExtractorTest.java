@@ -1,5 +1,6 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
+import com.example.arbexcelconverterweb.application.FilesReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,16 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ARBSimpleElementsExtractorTest {
 
     List<String> stringFiles;
-    ARBReader ARBReader;
     Map<String, String> simpleMap;
 
     @BeforeEach
     void setUp() {
-        File file = new File("intl_en_test.arb");
-        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = ARBReader.getARBStringFiles();
+        stringFiles = new FakeFilesReader().read();
 
-        ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
+        var ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
         simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
     }
 
