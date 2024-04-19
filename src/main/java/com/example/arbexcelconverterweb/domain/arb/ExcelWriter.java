@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,14 +18,15 @@ import java.util.Map;
 import static java.lang.System.getProperty;
 @Log4j2
 public class ExcelWriter {
+
     private final List<Map<String, String>> combinedMap;
-    private final String userPath = getProperty("user.home") + File.separator;
+    private File outputFile;
 
     public ExcelWriter(List<Map<String, String>> combinedMap) {
         this.combinedMap = combinedMap;
     }
 
-    void exportExcelFile() {
+    File exportExcelFile() {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Data");
             int colIdx = 0;
@@ -60,12 +62,14 @@ public class ExcelWriter {
                     }
                 }
             }
-            File outputFile = new File(userPath, "output.xlsx");
-            try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
-                workbook.write(fileOutputStream);
+            outputFile = File.createTempFile("output", ".xlsx");
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                 FileOutputStream fos = new FileOutputStream(outputFile)) {
+                workbook.write(fos);
             }
         } catch (FileInUseException | IOException e) {
             log.error("You haven't permission or Excel file is open.");
         }
+        return outputFile;
     }
 }
