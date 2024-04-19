@@ -18,7 +18,7 @@ import java.util.Map;
 import static java.lang.System.getProperty;
 @Log4j2
 public class ExcelWriter {
-
+ 
     private final List<Map<String, String>> combinedMap;
     private File outputFile;
 

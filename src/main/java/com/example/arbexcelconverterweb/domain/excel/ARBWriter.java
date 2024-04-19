@@ -1,8 +1,9 @@
 package com.example.arbexcelconverterweb.domain.excel;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ARBWriter {
@@ -14,15 +15,19 @@ public class ARBWriter {
         this.arbMap = arbMap;
     }
 
-    void arbFileWriter() {
+    List<File> arbFileWriter() {
+        List<File> generatedFiles = new ArrayList<>();
         for (Map.Entry<String, String> languagesMap : arbMap.entrySet()) {
-            File outputFile = new File(userPath, languagesMap.getKey() + ".arb");
-            try (FileWriter fileWriter = new FileWriter(outputFile)) {
-                fileWriter.write(languagesMap.getValue());
+            String prefix = languagesMap.getKey(); // Use key as prefix
+            String suffix = ".arb";
+            File tempFile;
+            try {
+                tempFile = File.createTempFile(prefix, suffix);
             } catch (IOException e) {
-                throw new IllegalArgumentException("No write permissions for the directory.");
+                throw new RuntimeException(e);
             }
+            generatedFiles.add(tempFile);
         }
+        return generatedFiles;
     }
-
 }
