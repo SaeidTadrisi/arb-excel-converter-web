@@ -7,18 +7,13 @@ import java.util.Map;
 
 public class ARBToExcelOrchestrator {
 
-    private final List<File> arbFiles;
-    private final String referenceFile;
+    private final List<String> arbStringFiles;
 
-    public ARBToExcelOrchestrator(List<File> arbFiles, String referenceFile) {
-        this.arbFiles = arbFiles;
-        this.referenceFile = referenceFile;
+    public ARBToExcelOrchestrator(List<String> arbStringFiles) {
+        this.arbStringFiles = arbStringFiles;
     }
 
     public void getExcelFile(){
-
-        ARBReader arbReader = new ARBReader(arbFiles, referenceFile);
-        List<String> arbStringFiles = arbReader.getARBStringFiles();
 
             List<Map<String, String>> mapList = new LinkedList<>();
             for (String arb : arbStringFiles) {
