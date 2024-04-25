@@ -1,7 +1,6 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
-import com.example.arbexcelconverterweb.application.FilesReader;
-import com.example.arbexcelconverterweb.application.FilesReaderImpl;
+import com.example.arbexcelconverterweb.infrastructure.FilesReaderImpl;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

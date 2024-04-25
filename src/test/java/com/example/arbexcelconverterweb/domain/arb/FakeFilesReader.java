@@ -1,7 +1,5 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
-import com.example.arbexcelconverterweb.application.FilesReader;
-
 import java.util.List;
 
 public class FakeFilesReader implements FilesReader {

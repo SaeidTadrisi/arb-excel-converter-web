@@ -9,8 +9,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +18,14 @@ import static java.lang.System.getProperty;
 public class ExcelWriter {
  
     private final List<Map<String, String>> combinedMap;
-    private File outputFile;
 
     public ExcelWriter(List<Map<String, String>> combinedMap) {
         this.combinedMap = combinedMap;
     }
 
-    File exportExcelFile() {
-        try (Workbook workbook = new XSSFWorkbook()) {
+    byte[] exportExcelFile() {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Data");
             int colIdx = 0;
             for (int mapIdx = 0; mapIdx < combinedMap.size(); mapIdx++) {
@@ -62,14 +60,11 @@ public class ExcelWriter {
                     }
                 }
             }
-            outputFile = File.createTempFile("output", ".xlsx");
-            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                 FileOutputStream fos = new FileOutputStream(outputFile)) {
-                workbook.write(fos);
-            }
+                workbook.write(bos);
+                return bos.toByteArray();
         } catch (FileInUseException | IOException e) {
             log.error("You haven't permission or Excel file is open.");
+            return new byte[0];
         }
-        return outputFile;
     }
 }

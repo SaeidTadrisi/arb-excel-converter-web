@@ -1,5 +1,6 @@
-package com.example.arbexcelconverterweb.application;
+package com.example.arbexcelconverterweb.infrastructure;
 
+import com.example.arbexcelconverterweb.domain.arb.FilesReader;
 import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 
@@ -20,6 +21,7 @@ public class FilesReaderImpl implements FilesReader {
     public FilesReaderImpl(List<File> fileList, String referenceFile) {
         this.fileList = fileList;
         this.referenceFile = referenceFile;
+        arbFileCheck(fileList);
     }
 
     @Override
