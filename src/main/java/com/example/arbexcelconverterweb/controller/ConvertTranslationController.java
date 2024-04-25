@@ -1,10 +1,7 @@
 package com.example.arbexcelconverterweb.controller;
 
-import com.example.arbexcelconverterweb.application.PrepareToTranslate;
-import com.example.arbexcelconverterweb.infrastructure.FilesReaderImpl;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import com.example.arbexcelconverterweb.application.ConvertTranslation;
+import com.example.arbexcelconverterweb.infrastructure.ExcelReaderImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,33 +10,32 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.List;
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
-import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+import static java.util.Objects.*;
 
 @RestController
-@RequestMapping("/convert")
+@RequestMapping("/translate")
 public class ConvertTranslationController {
 
-    @PostMapping("/prepare-excel")
-    public ResponseEntity<byte[]> translateFiles(@RequestParam("fileList") List<MultipartFile> files,
-                                                 @RequestParam("referenceFile") String referenceFile) {
+    @PostMapping("/convert")
+    public ResponseEntity<List<String>> convertExcelToArb(@RequestParam("file") MultipartFile excelFile) {
 
-        List<File> inMemoryFiles = files.stream()
-                .map(MultipartFile::getOriginalFilename)
-                .map(Objects::requireNonNull)
-                .map(File::new)
-                .toList();
+        File excel = new File(requireNonNull(excelFile.getOriginalFilename()));
 
-        PrepareToTranslate prepareToTranslate = new PrepareToTranslate(
-                new FilesReaderImpl(inMemoryFiles, referenceFile));
+        ConvertTranslation convertTranslation = new ConvertTranslation(new ExcelReaderImpl(excel));
 
-        byte[] excelData = prepareToTranslate.makeOutput();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_OCTET_STREAM);
-        headers.setContentDisposition(ContentDisposition.attachment()
-                .filename("output.xlsx").build());
-        return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
+        List<byte[]> bytes = convertTranslation.makeOutput();
+
+        for (byte[] aByte : bytes) {
+            String s = new String(aByte);
+            System.out.println(s);
+        }
+
+
+
+
+        return ResponseEntity.ok(List.of("bytes"));
     }
 }
