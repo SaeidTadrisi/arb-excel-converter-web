@@ -1,6 +1,5 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ public class ARBToExcelOrchestrator {
         this.arbStringFiles = arbStringFiles;
     }
 
-    public File getExcelFile(){
+    public byte[] getExcelFile(){
             List<Map<String, String>> mapList = new LinkedList<>();
             for (String arb : arbStringFiles) {
                 Map<String, String> otherElementsMap = new ARBSimpleElementsExtractor(arb).otherElementsExtractor();

@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class ARBWriter {
 
-    String userPath = System.getProperty("user.home") + File.separator;
     private final Map<String, String> arbMap;
 
     public ARBWriter(Map<String, String> arbMap) {
