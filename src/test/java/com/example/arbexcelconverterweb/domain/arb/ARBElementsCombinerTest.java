@@ -1,9 +1,15 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
+import com.example.arbexcelconverterweb.application.PrepareToTranslate;
+import com.example.arbexcelconverterweb.infrastructure.FilesReaderImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -11,18 +17,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ARBElementsCombinerTest {
 
-
     List<String> stringFiles;
-    ARBReader ARBReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
 
     @BeforeEach
     void setUp() {
-        File file = new File("intl_en_test.arb");
-        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = ARBReader.getARBStringFiles();
+        stringFiles = new FakeFilesReader().read();
 
         ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
         simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
@@ -36,7 +38,7 @@ class ARBElementsCombinerTest {
 
     @Test
     void should_combine_simple_elements_and_placeholder_maps() {
-        Map<String, Object> expectedMap = Map.of(
+        Map<String, String> expectedMap = Map.of(
                 "Key", "en",
                 "genericUpdate", "Update",
                 "profileBiography", "Biography",

@@ -3,7 +3,6 @@ package com.example.arbexcelconverterweb.domain.excel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,16 +15,13 @@ class ExcelElementsCombinerTest {
 
     @BeforeEach
     void setUp() {
-        File file = new File("en.xlsx");
-        ExcelReader excelReader = new ExcelReader(file);
-        Map<String, Map<String, String>> excelStringFile = excelReader.getExcelStringFile();
+        Map<String, Map<String, String>> excelStringFile = new FakeExcelReader().read();
 
-        ExcelPlaceHolderExtractor excelPlaceHolderExtractor = new ExcelPlaceHolderExtractor(excelStringFile.get("en"));
-        placeHolderMap = excelPlaceHolderExtractor.placeHoldersExtractor();
-
-        ExcelSimpleElementsExtractor excelSimpleElementsExtractor =
-                new ExcelSimpleElementsExtractor(excelStringFile.get("en"));
+        var excelSimpleElementsExtractor = new ExcelSimpleElementsExtractor(excelStringFile.get("en"));
         simpleMap = excelSimpleElementsExtractor.otherElementsExtractor();
+
+        var excelPlaceHolderExtractor = new ExcelPlaceHolderExtractor(excelStringFile.get("en"));
+        placeHolderMap = excelPlaceHolderExtractor.placeHoldersExtractor();
 
         ExcelElementsCombiner excelElementsCombiner = new ExcelElementsCombiner(simpleMap, placeHolderMap);
         arbPatternedString = excelElementsCombiner.arbPatternedMap();

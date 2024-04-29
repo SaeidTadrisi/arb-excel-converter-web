@@ -11,11 +11,11 @@ import static com.google.gson.FieldNamingPolicy.IDENTITY;
 public class ExcelElementsCombiner {
 
     private final Map<String, String> otherElementsMap;
-    private final Map<String, String> placeHolderMap;
+    private final Map<String, String> placeHoldersMap;
 
-    public ExcelElementsCombiner(Map<String, String> otherElementsMap, Map<String, String> placeHolderMap) {
+    public ExcelElementsCombiner(Map<String, String> otherElementsMap, Map<String, String> placeHoldersMap) {
         this.otherElementsMap = otherElementsMap;
-        this.placeHolderMap = placeHolderMap;
+        this.placeHoldersMap = placeHoldersMap;
     }
 
     String arbPatternedMap() {
@@ -30,7 +30,7 @@ public class ExcelElementsCombiner {
     }
 
     private Map<String, Object> arbPatternCreator() {
-        Map<String, String> combinedMap = mapsCombiner(otherElementsMap, placeHolderMap);
+        Map<String, String> combinedMap = mapsCombiner(otherElementsMap, placeHoldersMap);
         Map<String, Object> finalMap = new LinkedHashMap<>();
         Map<String, Object> valuesMap = new LinkedHashMap<>();
         Map<String, Object> titleMap = new LinkedHashMap<>();

@@ -1,5 +1,6 @@
 package com.example.arbexcelconverterweb.domain.arb;
 
+import com.example.arbexcelconverterweb.infrastructure.FilesReaderImpl;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ARBReaderTest {
+class ARBReaderImplTest {
 
     List<String> stringFiles;
-    ARBReader ARBReader;
+    FilesReader filesReader;
     Map<String, String> simpleMap;
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
@@ -23,8 +24,9 @@ class ARBReaderTest {
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
-        ARBReader = new ARBReader(List.of(file), "intl_en_test.arb");
-        stringFiles = ARBReader.getARBStringFiles();
+        filesReader = new FilesReaderImpl(List.of(file), "intl_en_test.arb");
+        stringFiles = filesReader.read();
+
 
         ARBSimpleElementsExtractor ARBSimpleElementsExtractor = new ARBSimpleElementsExtractor(stringFiles.getFirst());
         simpleMap = ARBSimpleElementsExtractor.otherElementsExtractor();
@@ -69,14 +71,14 @@ class ARBReaderTest {
                   }
                 }""".replace("\n", "\r\n");
 
-        assertDoesNotThrow(ARBReader::getARBStringFiles);
+        assertDoesNotThrow(filesReader::read);
         assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
     }
 
     @Test
     void should_throws_exception_when_file_extension_is_not_valid() {
         File file = new File("test.txt");
-        assertThrows(InvalidFileExtensionException.class, () -> new ARBReader(List.of(file), "test.txt"));
+        assertThrows(InvalidFileExtensionException.class, () -> new FilesReaderImpl(List.of(file), "test.txt"));
     }
 
     @Test
@@ -84,8 +86,8 @@ class ARBReaderTest {
 
         File file1 = new File("intl_en_test.arb");
         File file2 = new File("intl_es_test.arb");
-        ARBReader arbFiles = new ARBReader(List.of(file1, file2), "intl_es_test.arb");
-        List<String> stringFiles = arbFiles.getARBStringFiles();
+        FilesReader arbFiles = new FilesReaderImpl(List.of(file1, file2), "intl_es_test.arb");
+        List<String> stringFiles = arbFiles.read();
 
         String outputFile = """
                 {
