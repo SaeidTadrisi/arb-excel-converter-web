@@ -1,34 +1,32 @@
-package com.example.arbexcelconverterweb.domain.arb;
+package com.example.arbexcelconverterweb.infrastructure;
 
+import com.example.arbexcelconverterweb.domain.arb.FilesReader;
 import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.domain.exception.InvalidFileExtensionException;
-import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.nio.file.Files.readString;
 
-@Log4j2
-public class ARBReader {
+public class FilesReaderImpl implements FilesReader {
 
-    private final List<File> arbFiles;
-    private final String referenceFile;
+    List<File> fileList;
+    String referenceFile;
 
-    public ARBReader(List<File> arbFiles, String referenceFile) {
-        arbFileCheck(arbFiles);
+    public FilesReaderImpl(List<File> fileList, String referenceFile) {
+        this.fileList = fileList;
         this.referenceFile = referenceFile;
-        this.arbFiles = arbFiles;
+        arbFileCheck(fileList);
     }
 
-    List<String> getARBStringFiles() {
-        List<File> sortedList = fileListSorter(arbFiles, referenceFile);
+    @Override
+    public List<String> read() {
+        List<File> sortedList = fileListSorter(fileList, referenceFile);
         return arbToString(sortedList);
     }
 
@@ -56,7 +54,6 @@ public class ARBReader {
         try {
             return readString(path);
         } catch (IOException exception) {
-            log.error(exception.getMessage());
             throw new FileException("File not found");
         }
     }

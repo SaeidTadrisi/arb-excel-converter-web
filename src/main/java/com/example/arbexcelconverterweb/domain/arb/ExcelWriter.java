@@ -8,8 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -17,15 +16,16 @@ import java.util.Map;
 import static java.lang.System.getProperty;
 @Log4j2
 public class ExcelWriter {
+ 
     private final List<Map<String, String>> combinedMap;
-    private final String userPath = getProperty("user.home") + File.separator;
 
     public ExcelWriter(List<Map<String, String>> combinedMap) {
         this.combinedMap = combinedMap;
     }
 
-    void exportExcelFile() {
-        try (Workbook workbook = new XSSFWorkbook()) {
+    byte[] exportExcelFile() {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Data");
             int colIdx = 0;
             for (int mapIdx = 0; mapIdx < combinedMap.size(); mapIdx++) {
@@ -60,12 +60,11 @@ public class ExcelWriter {
                     }
                 }
             }
-            File outputFile = new File(userPath, "output.xlsx");
-            try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
-                workbook.write(fileOutputStream);
-            }
+                workbook.write(bos);
+                return bos.toByteArray();
         } catch (FileInUseException | IOException e) {
             log.error("You haven't permission or Excel file is open.");
+            return new byte[0];
         }
     }
 }
