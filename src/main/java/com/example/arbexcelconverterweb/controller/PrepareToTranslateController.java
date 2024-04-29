@@ -16,16 +16,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static org.springframework.http.MediaType.*;
-
 @RestController
 @RequestMapping("/translate")
 public class PrepareToTranslateController {
 
-    @Autowired
     private ServletContext servletContext;
 
-    @PostMapping("/prepare-excel")
+    public PrepareToTranslateController(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    @PostMapping("/prepare-translate")
     public ResponseEntity<byte[]> translateFiles(@RequestParam("fileList") List<MultipartFile> files,
                                                  @RequestParam("referenceFile") String referenceFile) {
 
@@ -53,7 +54,7 @@ public class PrepareToTranslateController {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDisposition(ContentDisposition.attachment()
                 .filename("output.xlsx").build());
-        
+
         return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
     }
 }

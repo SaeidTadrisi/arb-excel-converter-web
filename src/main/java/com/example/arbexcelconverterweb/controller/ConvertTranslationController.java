@@ -1,41 +1,75 @@
 package com.example.arbexcelconverterweb.controller;
 
 import com.example.arbexcelconverterweb.application.ConvertTranslation;
+import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.infrastructure.ExcelReaderImpl;
+import jakarta.servlet.ServletContext;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 @RestController
 @RequestMapping("/translate")
 public class ConvertTranslationController {
 
-    @PostMapping("/convert")
-    public ResponseEntity<List<String>> convertExcelToArb(@RequestParam("file") MultipartFile excelFile) {
+    private ServletContext servletContext;
 
-        File excel = new File(requireNonNull(excelFile.getOriginalFilename()));
+    public ConvertTranslationController(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
-        ConvertTranslation convertTranslation = new ConvertTranslation(new ExcelReaderImpl(excel));
+    @PostMapping("/convert-translation")
+    public ResponseEntity<byte[]> convertExcelToArb(@RequestParam("file") MultipartFile excelFile) {
 
-        List<byte[]> bytes = convertTranslation.makeOutput();
+        String realPath = servletContext.getRealPath("/");
+        String filename = StringUtils.cleanPath(requireNonNull(excelFile.getOriginalFilename()));
+        File inMemoryFile = new File(realPath + filename);
 
-        for (byte[] aByte : bytes) {
-            String s = new String(aByte);
-            System.out.println(s);
+        try {
+            excelFile.transferTo(inMemoryFile);
+        } catch (IOException e) {
+            throw new FileException("Failed to store file " + filename);
         }
 
+        ConvertTranslation convertTranslation = new ConvertTranslation(new ExcelReaderImpl(inMemoryFile));
 
+        List<byte[]> bytesList = convertTranslation.makeOutput();
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ZipOutputStream zos = new ZipOutputStream(baos)) {
+            for (int i = 0; i < bytesList.size(); i++) {
+                byte[] bytes = bytesList.get(i);
+                ZipEntry zipEntry = new ZipEntry("output_" + i + ".arb");
+                zos.putNextEntry(zipEntry);
+                zos.write(bytes);
+                zos.closeEntry();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return ResponseEntity.ok(List.of("bytes"));
+        byte[] zipBytes = baos.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("filename", "output.zip");
+
+        return new ResponseEntity<>(zipBytes, headers, HttpStatus.OK);
     }
 }
