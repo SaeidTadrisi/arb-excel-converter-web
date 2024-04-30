@@ -28,7 +28,7 @@ import static java.util.Objects.requireNonNull;
 @RequestMapping("/translate")
 public class ConvertTranslationController {
 
-    private ServletContext servletContext;
+    private final ServletContext servletContext;
 
     public ConvertTranslationController(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -37,6 +37,16 @@ public class ConvertTranslationController {
     @PostMapping("/convert-translation")
     public ResponseEntity<byte[]> convertExcelToArb(@RequestParam("file") MultipartFile excelFile) {
 
+        File inMemoryFile = processUploadedFiles(excelFile);
+
+        ConvertTranslation convertTranslation = new ConvertTranslation(new ExcelReaderImpl(inMemoryFile));
+
+        List<byte[]> bytesList = convertTranslation.makeOutput();
+
+        return buildZipFileResponse(bytesList);
+    }
+
+    private File processUploadedFiles(MultipartFile excelFile) {
         String realPath = servletContext.getRealPath("/");
         String filename = StringUtils.cleanPath(requireNonNull(excelFile.getOriginalFilename()));
         File inMemoryFile = new File(realPath + filename);
@@ -46,11 +56,10 @@ public class ConvertTranslationController {
         } catch (IOException e) {
             throw new FileException("Failed to store file " + filename);
         }
+        return inMemoryFile;
+    }
 
-        ConvertTranslation convertTranslation = new ConvertTranslation(new ExcelReaderImpl(inMemoryFile));
-
-        List<byte[]> bytesList = convertTranslation.makeOutput();
-
+    private static ResponseEntity<byte[]> buildZipFileResponse(List<byte[]> bytesList) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
             for (int i = 0; i < bytesList.size(); i++) {

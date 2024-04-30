@@ -20,7 +20,7 @@ import java.util.Objects;
 @RequestMapping("/translate")
 public class PrepareToTranslateController {
 
-    private ServletContext servletContext;
+    private final ServletContext servletContext;
 
     public PrepareToTranslateController(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -30,10 +30,19 @@ public class PrepareToTranslateController {
     public ResponseEntity<byte[]> translateFiles(@RequestParam("fileList") List<MultipartFile> files,
                                                  @RequestParam("referenceFile") String referenceFile) {
 
+        List<File> inMemoryFiles = processUploadedFiles(files);
+
+        PrepareToTranslate prepareToTranslate = new PrepareToTranslate(new FilesReaderImpl(inMemoryFiles, referenceFile));
+
+        byte[] excelData = prepareToTranslate.makeOutput();
+        return buildExcelResponse(excelData);
+    }
+
+    private List<File> processUploadedFiles(List<MultipartFile> files) {
 
         String realPath = servletContext.getRealPath("/");
 
-        List<File> inMemoryFiles = files.stream()
+        return files.stream()
                 .map(file -> {
                     String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
                     File destinationFile = new File(realPath + filename);
@@ -45,11 +54,9 @@ public class PrepareToTranslateController {
                     }
                 })
                 .toList();
+    }
 
-        PrepareToTranslate prepareToTranslate = new PrepareToTranslate(
-                new FilesReaderImpl(inMemoryFiles, referenceFile));
-
-        byte[] excelData = prepareToTranslate.makeOutput();
+    private static ResponseEntity<byte[]> buildExcelResponse(byte[] excelData) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDisposition(ContentDisposition.attachment()
