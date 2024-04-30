@@ -4,7 +4,6 @@ import com.example.arbexcelconverterweb.application.PrepareToTranslate;
 import com.example.arbexcelconverterweb.domain.exception.FileException;
 import com.example.arbexcelconverterweb.infrastructure.FilesReaderImpl;
 import jakarta.servlet.ServletContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 
 import org.springframework.util.StringUtils;
