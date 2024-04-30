@@ -1,0 +1,29 @@
+{
+  "@@locale": "es",
+  "genericUpdate": "Actualizar",
+  "profileBiography": "Biografía",
+  "profileBioEmptyMessage": "¡Ayuda a la comunidad a conocerte mejor!",
+  "profileUpdateError": "No se pudo actualizar el perfil, ¿estás conectado a Internet?",
+  "alert_errors_found": "Errores encontrados Corrija los siguientes errores: {errors}",
+  "@alert_errors_found": {
+    "placeholders": {
+      "errors": {
+        "type": "String",
+        "example": "Please fix the following errors: {errors}"
+      }
+    }
+  },
+  "alert_impersonation_notice": "Actualmente estás haciéndote pasar por {user} / {id}",
+  "@alert_impersonation_notice": {
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "You are currently impersonating {user} / {id}"
+      },
+      "user": {
+        "type": "String",
+        "example": "You are currently impersonating {user} / {id}"
+      }
+    }
+  }
+}
