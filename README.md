@@ -23,3 +23,10 @@ Convert translations: Take an Excel file containing translated content and expor
 - Excel File (MultipartFile) as "file" Key: This parameter expects a single file in the Excel format (.xls, .xlsx). The file likely contains translated content that needs to be converted into ARB files.
 
 ![convert-translation](https://github.com/SaeidTadrisi/arb-excel-converter-web/assets/108466072/d98dd357-09d0-4690-9140-c07ae4d943a0)
+
+**Note (Access the Save Options):**
+- Locate the three-dot button (...) in the top right corner of the response pane. This button offers various actions for the response.
+- Click on the button labeled "Save Response to File" from the dropdown menu.
+- Postman will prompt you to choose a location on your computer where you want to save the response.
+
+![save output](https://github.com/SaeidTadrisi/arb-excel-converter-web/assets/108466072/9c8fe9ad-92cf-412e-a8cd-0b5979536310)
