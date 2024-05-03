@@ -36,24 +36,25 @@ public class ExcelReaderImpl implements ExcelReader {
             for (int cellIndex = 1; cellIndex < lastCellNum; cellIndex++) {
                 Map<String, String> importMap = new LinkedHashMap<>();
                 String columnName = sheet.getRow(0).getCell(cellIndex).getStringCellValue();
-                for (Row row : sheet) {
-                    Cell keyCell = row.getCell(0);
-                    Cell valueCell = row.getCell(cellIndex);
-                    if (keyCell != null && valueCell != null) {
-                        String key = keyCell.getStringCellValue();
-                        String value = valueCell.getStringCellValue();
-                        importMap.put(key, value);
-                    } else if (keyCell != null) {
-                        String key = keyCell.getStringCellValue();
-                        String value = "";
-                        importMap.put(key, value);
+                if (!columnName.isEmpty()) {
+                    for (Row row : sheet) {
+                        Cell keyCell = row.getCell(0);
+                        Cell valueCell = row.getCell(cellIndex);
+                        if (keyCell != null && valueCell != null) {
+                            String key = keyCell.getStringCellValue();
+                            String value = valueCell.getStringCellValue();
+                            importMap.put(key, value);
+                        } else if (keyCell != null) {
+                            String key = keyCell.getStringCellValue();
+                            String value = "";
+                            importMap.put(key, value);
+                        }
                     }
+                    importData.put(columnName, importMap);
                 }
-                importData.put(columnName, importMap);
             }
         } catch (FileNotFoundException | NullPointerException | IOException e) {
             log.error("Excel File not found");
-
         }
         return importData;
     }
