@@ -2,8 +2,7 @@ const referenceFileShow = document.getElementById('referenceFileShow');
 const fileListShow = document.getElementById('fileListShow');
 const excelFile = document.getElementById('excelFile');
 const uploadButton = document.getElementById('uploadButton');
-
-
+const uploadFormExcel = document.getElementById('uploadFormExcel');
 
 export function showSelectedFile() {
   fileListShow.innerHTML = '';
@@ -25,12 +24,14 @@ export function sendExcelRequest() {
       return;
     }
 
+    uploadFormExcel.submit();
+
     const excelFormData = new FormData();
 
     excelFormData.append('file', fileList.files[0]);
 
     try {
-        const response = await fetch('https://arb-excel-converter-web-cors.onrender.com/translate/convert-translation', {
+        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/convert-translation', {
             method: 'POST',
             body: excelFormData
         });
