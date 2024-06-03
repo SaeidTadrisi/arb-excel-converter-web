@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin(origins = "https://saeidtadrisi.github.io/ARB-Converter-FrontEnd/", methods = { RequestMethod.POST }, allowedHeaders = { "Content-Type" })
 @RequestMapping("/translate")
 public class PrepareToTranslateController {
 

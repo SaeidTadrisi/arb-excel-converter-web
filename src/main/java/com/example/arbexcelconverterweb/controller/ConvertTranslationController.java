@@ -22,6 +22,7 @@ import java.util.zip.ZipOutputStream;
 import static java.util.Objects.requireNonNull;
 
 @RestController
+@CrossOrigin(origins = "https://saeidtadrisi.github.io/ARB-Converter-FrontEnd/", methods = { RequestMethod.POST }, allowedHeaders = { "Content-Type" })
 @RequestMapping("/translate")
 public class ConvertTranslationController {
 
