@@ -2,7 +2,6 @@ const referenceFileShow = document.getElementById('referenceFileShow');
 const fileListShow = document.getElementById('fileListShow');
 const referenceFile = document.getElementById('referenceFile');
 const convertButton = document.getElementById('convertButton');
-const uploadFormARB = document.getElementById('uploadFormARB');
 const fileList = document.getElementById('fileList');
 const uploadButton = document.getElementById('uploadButton');
 
@@ -40,18 +39,17 @@ export function sendARBRequest() {
       return;
     }
 
-    const formData = new FormData();
+    const arbFormData = new FormData();
 
     for (let i = 0; i < fileList.files.length; i++) {
-      formData.append('fileList', fileList.files[i]);
+      arbFormData.append('fileList', fileList.files[i]);
     }
 
-    formData.append('referenceFile', referenceFile.value);
-    uploadFormARB.submit();
+    arbFormData.append('referenceFile', referenceFile.value);
     try {
-        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/prepare-translate', {
+        const response = await fetch('https://arb-excel-converter-web-cors.onrender.com/translate/prepare-translate', {
             method: 'POST',
-            body: formData
+            body: arbFormData
         });
         if (response.ok) {
           const data = await response.blob();
