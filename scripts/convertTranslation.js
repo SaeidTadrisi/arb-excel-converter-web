@@ -4,6 +4,8 @@ const excelFile = document.getElementById('excelFile');
 const uploadButton = document.getElementById('uploadButton');
 const uploadFormExcel = document.getElementById('uploadFormExcel');
 
+
+
 export function showSelectedFile() {
   fileListShow.innerHTML = '';
   referenceFileShow.innerHTML = '';
@@ -24,21 +26,26 @@ export function sendExcelRequest() {
       return;
     }
 
-    uploadFormExcel.submit();
-
     const excelFormData = new FormData();
 
-    excelFormData.append('file', fileList.files[0]);
+    excelFormData.append('file', excelFile.files[0]);
 
     try {
-        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/convert-translation', {
+        const response = await fetch('https://arb-excel-converter-web-cors.onrender.com/translate/convert-translation', {
             method: 'POST',
             body: excelFormData
         });
 
         if (response.ok) {            
-            const zipBlob = await response.blob();
+          const zipBlob = await response.blob();
+          const tempURL = window.URL.createObjectURL(zipBlob);
+          const downloadLink = document.createElement('a');
+          downloadLink.href = tempURL;
+          downloadLink.download = "translation.zip";
+          downloadLink.click();
+          window.URL.revokeObjectURL(tempURL); 
         } else {
+          console.error('Error in server response:', errorMessage);
         }
     } catch (error) {
         console.error('Error uploading files:', error);
