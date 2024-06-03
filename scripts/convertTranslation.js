@@ -31,7 +31,7 @@ export function sendExcelRequest() {
     excelFormData.append('file', excelFile.files[0]);
 
     try {
-        const response = await fetch('https://arb-excel-converter-web-cors.onrender.com/translate/convert-translation', {
+        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/convert-translation', {
             method: 'POST',
             body: excelFormData
         });

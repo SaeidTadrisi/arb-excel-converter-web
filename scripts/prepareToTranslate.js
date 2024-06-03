@@ -48,7 +48,7 @@ export function sendARBRequest() {
 
     arbFormData.append('referenceFile', referenceFile.value);
     try {
-        const response = await fetch('https://arb-excel-converter-web-cors.onrender.com/translate/prepare-translate', {
+        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/prepare-translate', {
             method: 'POST',
             body: arbFormData
         });
