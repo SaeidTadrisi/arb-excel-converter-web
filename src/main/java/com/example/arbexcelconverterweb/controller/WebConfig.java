@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig {
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -14,7 +15,7 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/translate/**")
                         .allowedOrigins("https://saeidtadrisi.github.io")
-                        .allowedMethods("POST")
+                        .allowedMethods("POST", "OPTIONS")
                         .allowedHeaders("Content-Type");
             }
         };
