@@ -19,10 +19,14 @@
   
       <button class="upload-button" disabled id="uploadButton">Upload</button>
       
-      <input type="file" id="fileList" name="fileList" multiple style="display: none">
-      <input type="text" id="referenceFile" name="referenceFile" style="display: none;">
+      <form id="uploadFormARB" method="POST"  action="https://arb-excel-converter-web.onrender.com/translate/prepare-translate" enctype="multipart/form-data">
+        <input type="file" id="fileList" name="fileList" multiple style="display: none">
+        <input type="text" id="referenceFile" name="referenceFile" style="display: none;">
+      </form>
 
-      <input type="file" id="excelFile" name="file" style="display: none">
+      <form id="uploadFormExcel" method="POST" action="https://arb-excel-converter-web.onrender.com/translate/convert-translation" enctype="multipart/form-data">
+        <input type="file" id="excelFile" name="file" style="display: none">
+      </form>
 
       <p class="hint" id="hint"></p>
 
