@@ -17,7 +17,7 @@
         <option value="convert_translation">Convert Translation </option>
       </select>
   
-      <button class="upload-button" disabled id="uploadButton">Upload</button>
+      <button class="upload-button" id="uploadButton">Upload</button>
       
       <input type="file" id="fileList" name="fileList" multiple style="display: none">
       <input type="text" id="referenceFile" name="referenceFile" style="display: none;">
@@ -39,9 +39,12 @@
 
     <div class="error">
       <p class="error-message" id="errorMessage"></p>
+      <p class= "message" id="message"></p>
     </div>
 
     <button class="convert-button" id="convertButton">Convert</button>
+
+    <button class="reset-button" id="reset-button">Reset Form</button>
   </div>
   <script type="module" src="./scripts/homepage.js"></script>
 </body>

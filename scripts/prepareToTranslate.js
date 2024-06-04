@@ -2,10 +2,10 @@ const referenceFileShow = document.getElementById('referenceFileShow');
 const fileListShow = document.getElementById('fileListShow');
 const referenceFile = document.getElementById('referenceFile');
 const convertButton = document.getElementById('convertButton');
-const uploadFormARB = document.getElementById('uploadFormARB');
 const fileList = document.getElementById('fileList');
 const uploadButton = document.getElementById('uploadButton');
-
+const message = document.getElementById('message');
+const errorMessage = document.getElementById('errorMessage');
 
 export function showReferenceFile (){
   fileListShow.innerHTML = '';
@@ -13,6 +13,8 @@ export function showReferenceFile (){
 
   document.getElementById('fileList').addEventListener('change', (event) => {
     const selectedFiles = event.target.files;
+
+    fileListShow.innerHTML = ''
     
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
@@ -40,6 +42,11 @@ export function sendARBRequest() {
       return;
     }
 
+    if(referenceFile.value === ''){
+      errorMessage.textContent = '* Please select your reference file.'
+      return;
+    }
+
     const arbFormData = new FormData();
 
     for (let i = 0; i < fileList.files.length; i++) {
@@ -59,7 +66,10 @@ export function sendARBRequest() {
           downloadLink.href = tempURL;
           downloadLink.download = "output.xlsx";
           downloadLink.click();
-          window.URL.revokeObjectURL(tempURL); 
+          window.URL.revokeObjectURL(tempURL);
+
+          message.textContent = "Excel File Generated & Downloaded Successfully";
+
         } else {
           console.error('Error in server response:', errorMessage);
         }
@@ -70,13 +80,10 @@ export function sendARBRequest() {
 }
 
 export function arbFilesSelect(){
-  uploadButton.addEventListener('click', () => {
     fileList.click();
-  })
-}
+  }
 
 function validateArbFiles(){
-  const errorMessage = document.getElementById('errorMessage');
 
   if (!fileList .files.length) {
     errorMessage.textContent = '* Please select one or more files to upload.';

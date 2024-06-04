@@ -3,9 +3,11 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
+  background-color: rgb(18, 18, 18);
 }
 
 .app-panel {
+  background-color: rgb(255, 255, 255);
   border: solid, 1px, rgb(166, 166, 166);
   padding: 10px;
   border-radius: 5px;
@@ -13,7 +15,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%)
-  
 }
 
 .select-option {
@@ -23,7 +24,6 @@ body {
   color: rgb(35, 35, 35);
   border-radius: 5px;
 }
-
 
 .label {
   font-size: 22px;
@@ -38,7 +38,6 @@ body {
   font-size: 12px;
 }
 
-
 .upload-button {
   height: 30px;
   width: 100px;
@@ -49,13 +48,12 @@ body {
 }
 
 .upload-button:hover {
-  background-color: rgb(221, 221, 221)
+  background-color: rgba(66, 124, 151, 0.577)
 }
 
 .select-panel {
   height: 30px;
 }
-
 
 .file-list {
   list-style: none;
@@ -70,15 +68,17 @@ body {
 }
 
 .convert-button {
+  display: block;
   height: 40px;
   width: 326px;
   border: solid, 1px, rgb(166, 166, 166);
+  margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .convert-button:hover {
-  background-color: rgb(221, 221, 221)
+  background-color: rgba(5, 52, 0, 0.521)
 }
 
 .ref-file {
@@ -105,4 +105,21 @@ body {
 .error-message {
   font-size: 13px;
   color: red;
+}
+
+.message {
+  font-size: 20;
+  color: rgb(52, 255, 52);
+}
+
+.reset-button {
+  height: 40px;
+  width: 326px;
+  border: solid, 1px, rgb(166, 166, 166);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: rgba(61, 0, 0, 0.508)
 }

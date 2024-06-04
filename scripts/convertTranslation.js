@@ -2,9 +2,7 @@ const referenceFileShow = document.getElementById('referenceFileShow');
 const fileListShow = document.getElementById('fileListShow');
 const excelFile = document.getElementById('excelFile');
 const uploadButton = document.getElementById('uploadButton');
-const uploadFormExcel = document.getElementById('uploadFormExcel');
-
-
+const message = document.getElementById('message');
 
 export function showSelectedFile() {
   fileListShow.innerHTML = '';
@@ -25,7 +23,7 @@ export function sendExcelRequest() {
     if (!validateExcelFiles()){
       return;
     }
-
+    
     const excelFormData = new FormData();
 
     excelFormData.append('file', excelFile.files[0]);
@@ -44,6 +42,10 @@ export function sendExcelRequest() {
           downloadLink.download = "translation.zip";
           downloadLink.click();
           window.URL.revokeObjectURL(tempURL); 
+
+          message.textContent = "Zip File Generated & Downloaded Successfully";
+
+      
         } else {
           console.error('Error in server response:', errorMessage);
         }
@@ -54,9 +56,7 @@ export function sendExcelRequest() {
 }
 
 export function excelFilesSelect(){
-  uploadButton.addEventListener('click', () => {
-    excelFile.click();
-  })
+  excelFile.click();
 }
 
 function validateExcelFiles(){
@@ -66,7 +66,6 @@ function validateExcelFiles(){
     errorMessage.textContent = '* Please select one file to upload.';
     return false;
   }
-
     const file = excelFile.files[0];
     const extension = file.name.split('.').pop().toLowerCase();
 
