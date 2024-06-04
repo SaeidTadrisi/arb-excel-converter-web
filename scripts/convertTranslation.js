@@ -36,6 +36,14 @@ export function showSelectedFile() {
 
       if (response.ok) {            
         const zipBlob = await response.blob();
+        const tempURL = window.URL.createObjectURL(zipBlob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = tempURL;
+        downloadLink.download = "translation.zip";
+        downloadLink.click();
+        window.URL.revokeObjectURL(tempURL); 
+        
+        errorMessage.textContent = '';
         message.textContent = "Zip File Generated & Downloaded Successfully";
       } else {
         console.error('Error in server response:', errorMessage);
@@ -44,6 +52,7 @@ export function showSelectedFile() {
       console.error('Error uploading files:', error);
   }
 });
+
 
 export function excelFilesSelect(){
   excelFile.click();
