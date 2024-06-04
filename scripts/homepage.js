@@ -1,6 +1,6 @@
 
-import {showReferenceFile, sendARBRequest, arbFilesSelect} from './prepareToTranslate.js';
-import {showSelectedFile, sendExcelRequest, excelFilesSelect} from './convertTranslation.js';
+import {showReferenceFile, sendARBRequest} from './prepareToTranslate.js';
+import {showSelectedFile, sendExcelRequest} from './convertTranslation.js';
 
 const hintElement = document.getElementById('hint');
 const fileList = document.getElementById('fileList');
@@ -12,9 +12,10 @@ const excelFile = document.getElementById('excelFile');
 const errorMessage = document.getElementById('errorMessage');
 const message = document.getElementById('message');
 const referenceFile = document.getElementById('referenceFile');
+const convertButton = document.getElementById('convertButton');
 
 
-
+convertButton
 selectElement.addEventListener('change', executeBySelectedOption);
 
 function executeBySelectedOption(){
@@ -40,17 +41,21 @@ function uploadButtonAction() {
   if (selectedValue === 'prepare_to_translate') {
     fileList.accept = ".arb"
     selectElement.disabled = true;
-    arbFilesSelect();
+    fileList.click();
     showReferenceFile();
     }
     else if (selectedValue === 'convert_translation'){
     excelFile.accept = ".xlsx , .xls"
     selectElement.disabled = true;
-    excelFilesSelect();
+    excelFile.click();
     showSelectedFile();
   }
 }
 
+convertButton.addEventListener('click', convertButtonAction)
+
+
+function convertButtonAction (){
   const selectedValue = selectElement.value;
   if (selectedValue === 'prepare_to_translate') {
     sendARBRequest();
@@ -58,6 +63,8 @@ function uploadButtonAction() {
     else if (selectedValue === 'convert_translation'){
     sendExcelRequest();
   }
+}
+
 
 const resetButton = document.getElementById('reset-button');
   resetButton.addEventListener('click', resetForm);

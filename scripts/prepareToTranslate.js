@@ -34,11 +34,7 @@ export function showReferenceFile (){
   });
 }
 
-export function sendARBRequest() {
-  
-  convertButton.addEventListener('click', async (event) => {
-    
-    event.preventDefault();
+export async function sendARBRequest() {
 
     if (!validateArbFiles()){
       return;
@@ -79,12 +75,7 @@ export function sendARBRequest() {
     } catch (error) {
       console.error('Error uploading files:', error);
     }
-  });
 }
-
-export function arbFilesSelect(){
-    fileList.click();
-  }
 
 function validateArbFiles(){
 
