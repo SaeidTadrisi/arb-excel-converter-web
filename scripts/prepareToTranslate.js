@@ -42,7 +42,7 @@ export function sendARBRequest() {
       return;
     }
 
-    if(referenceFile.value === ''){
+    if (referenceFile.value === ''){
       errorMessage.textContent = '* Please select your reference file.'
       return;
     }

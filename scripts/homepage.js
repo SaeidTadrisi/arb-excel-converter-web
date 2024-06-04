@@ -11,6 +11,7 @@ const uploadButton = document.getElementById('uploadButton');
 const excelFile = document.getElementById('excelFile');
 const errorMessage = document.getElementById('errorMessage');
 const message = document.getElementById('message');
+const referenceFile = document.getElementById('referenceFile');
 
 
 
@@ -61,6 +62,7 @@ function uploadButtonAction() {
     fileListShow.textContent = '';    
     fileList.value = '';
     excelFile.value = '';
+    referenceFile.value = '';
     referenceFileShow.textContent = '';
     uploadButton.disabled = false;
     errorMessage.textContent = '';
