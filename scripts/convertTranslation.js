@@ -16,7 +16,6 @@ export function showSelectedFile() {
     });
 }
 
-export function sendExcelRequest() {
   convertButton.addEventListener('click', async (event) => {
     event.preventDefault();
     
@@ -45,7 +44,6 @@ export function sendExcelRequest() {
       console.error('Error uploading files:', error);
   }
 });
-}
 
 export function excelFilesSelect(){
   excelFile.click();

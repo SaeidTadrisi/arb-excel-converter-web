@@ -1,6 +1,6 @@
 
-import {showReferenceFile, sendARBRequest, arbFilesSelect} from './prepareToTranslate.js';
-import {showSelectedFile, sendExcelRequest, excelFilesSelect} from './convertTranslation.js';
+import {showReferenceFile, arbFilesSelect} from './prepareToTranslate.js';
+import {showSelectedFile, excelFilesSelect} from './convertTranslation.js';
 
 const hintElement = document.getElementById('hint');
 const fileList = document.getElementById('fileList');
@@ -42,16 +42,15 @@ function uploadButtonAction() {
     selectElement.disabled = true;
     arbFilesSelect();
     showReferenceFile();
-    sendARBRequest();
     }
     else if (selectedValue === 'convert_translation'){
     excelFile.accept = ".xlsx , .xls"
     selectElement.disabled = true;
     excelFilesSelect();
     showSelectedFile();
-    sendExcelRequest();
   }
 }
+
   const resetButton = document.getElementById('reset-button');
   resetButton.addEventListener('click', resetForm);
 

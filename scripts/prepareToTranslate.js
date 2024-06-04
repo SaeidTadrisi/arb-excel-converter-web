@@ -34,8 +34,6 @@ export function showReferenceFile (){
   });
 }
 
-export function sendARBRequest() {
-  
   convertButton.addEventListener('click', async (event) => {
     
     if (!validateArbFiles()){
@@ -63,7 +61,7 @@ export function sendARBRequest() {
     if (response.ok) {
         const data = await response.blob();
         message.textContent = "Excel File Generated & Downloaded Successfully";
-        
+
       } else {
         console.error('Error in server response:', errorMessage);
       }
@@ -71,7 +69,7 @@ export function sendARBRequest() {
       console.error('Error uploading files:', error);
     }
   });
-}
+
 
 export function arbFilesSelect(){
     fileList.click();
