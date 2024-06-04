@@ -62,15 +62,8 @@ export function sendARBRequest() {
       });
     if (response.ok) {
         const data = await response.blob();
-        const tempURL = window.URL.createObjectURL(data);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = tempURL;
-        downloadLink.download = "output.xlsx";
-        downloadLink.click();
-        window.URL.revokeObjectURL(tempURL);
-
         message.textContent = "Excel File Generated & Downloaded Successfully";
-
+        
       } else {
         console.error('Error in server response:', errorMessage);
       }

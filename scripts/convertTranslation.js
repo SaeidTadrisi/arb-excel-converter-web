@@ -37,16 +37,7 @@ export function sendExcelRequest() {
 
       if (response.ok) {            
         const zipBlob = await response.blob();
-        const tempURL = window.URL.createObjectURL(zipBlob);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = tempURL;
-        downloadLink.download = "translation.zip";
-        downloadLink.click();
-        window.URL.revokeObjectURL(tempURL); 
-
         message.textContent = "Zip File Generated & Downloaded Successfully";
-
-    
       } else {
         console.error('Error in server response:', errorMessage);
       }
