@@ -1,6 +1,6 @@
 
-import {showReferenceFile, arbFilesSelect} from './prepareToTranslate.js';
-import {showSelectedFile, excelFilesSelect} from './convertTranslation.js';
+import {showReferenceFile, sendARBRequest, arbFilesSelect} from './prepareToTranslate.js';
+import {showSelectedFile, sendExcelRequest, excelFilesSelect} from './convertTranslation.js';
 
 const hintElement = document.getElementById('hint');
 const fileList = document.getElementById('fileList');
@@ -51,7 +51,22 @@ function uploadButtonAction() {
   }
 }
 
-  const resetButton = document.getElementById('reset-button');
+const convertButton = document.getElementById('convertButton');
+
+convertButton.addEventListener('click', convertButtonAction)
+
+function convertButtonAction (){
+  const selectedValue = selectElement.value;
+  if (selectedValue === 'prepare_to_translate') {
+    sendARBRequest();
+    }
+    else if (selectedValue === 'convert_translation'){
+    sendExcelRequest();
+  }
+
+}
+
+const resetButton = document.getElementById('reset-button');
   resetButton.addEventListener('click', resetForm);
 
   function resetForm() {

@@ -16,8 +16,8 @@ export function showSelectedFile() {
     });
 }
 
-  convertButton.addEventListener('click', async (event) => {
-    event.preventDefault();
+export function sendExcelRequest() {
+  async () => {
     
     if (!validateExcelFiles()){
       return;
@@ -42,17 +42,18 @@ export function showSelectedFile() {
         downloadLink.download = "translation.zip";
         downloadLink.click();
         window.URL.revokeObjectURL(tempURL); 
-        
-        errorMessage.textContent = '';
+
         message.textContent = "Zip File Generated & Downloaded Successfully";
+
+    
       } else {
         console.error('Error in server response:', errorMessage);
       }
   } catch (error) {
       console.error('Error uploading files:', error);
   }
-});
-
+};
+}
 
 export function excelFilesSelect(){
   excelFile.click();

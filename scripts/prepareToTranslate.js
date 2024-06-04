@@ -34,8 +34,9 @@ export function showReferenceFile (){
   });
 }
 
-  convertButton.addEventListener('click', async (event) => {
-    
+export function sendARBRequest() {
+  
+  async () => {
     if (!validateArbFiles()){
       return;
     }
@@ -66,7 +67,7 @@ export function showReferenceFile (){
         downloadLink.download = "output.xlsx";
         downloadLink.click();
         window.URL.revokeObjectURL(tempURL);
-        errorMessage.textContent = '';
+
         message.textContent = "Excel File Generated & Downloaded Successfully";
 
       } else {
@@ -75,8 +76,8 @@ export function showReferenceFile (){
     } catch (error) {
       console.error('Error uploading files:', error);
     }
-  });
-
+  };
+}
 
 export function arbFilesSelect(){
     fileList.click();
