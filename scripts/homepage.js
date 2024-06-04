@@ -51,11 +51,9 @@ function uploadButtonAction() {
   }
 }
 
-const convertButton = document.getElementById('convertButton');
+convertAction ();
 
-convertButton.addEventListener('click', convertButtonAction)
-
-function convertButtonAction () {
+function convertAction () {
   const selectedValue = selectElement.value;
   if (selectedValue === 'prepare_to_translate') {
     sendARBRequest();
@@ -63,7 +61,6 @@ function convertButtonAction () {
     else if (selectedValue === 'convert_translation'){
     sendExcelRequest();
   }
-
 }
 
 const resetButton = document.getElementById('reset-button');
