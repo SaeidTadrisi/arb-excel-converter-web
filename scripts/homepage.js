@@ -55,7 +55,7 @@ const convertButton = document.getElementById('convertButton');
 
 convertButton.addEventListener('click', convertButtonAction)
 
-function convertButtonAction (){
+function convertButtonAction () {
   const selectedValue = selectElement.value;
   if (selectedValue === 'prepare_to_translate') {
     sendARBRequest();

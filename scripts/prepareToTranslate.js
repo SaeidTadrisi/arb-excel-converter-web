@@ -36,12 +36,15 @@ export function showReferenceFile (){
 
 export function sendARBRequest() {
   
-  async () => {
+  convertButton.addEventListener('click', async (event) => {
+    
+    event.preventDefault();
+
     if (!validateArbFiles()){
       return;
     }
 
-    if (referenceFile.value === ''){
+    if(referenceFile.value === ''){
       errorMessage.textContent = '* Please select your reference file.'
       return;
     }
@@ -76,7 +79,7 @@ export function sendARBRequest() {
     } catch (error) {
       console.error('Error uploading files:', error);
     }
-  };
+  });
 }
 
 export function arbFilesSelect(){
