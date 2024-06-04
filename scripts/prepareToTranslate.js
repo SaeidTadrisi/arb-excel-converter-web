@@ -55,28 +55,29 @@ export function sendARBRequest() {
 
     arbFormData.append('referenceFile', referenceFile.value);
     try {
-        const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/prepare-translate', {
-            method: 'POST',
-            body: arbFormData
-        });
-        if (response.ok) {
-          const data = await response.blob();
-          const tempURL = window.URL.createObjectURL(data);
-          const downloadLink = document.createElement('a');
-          downloadLink.href = tempURL;
-          downloadLink.download = "output.xlsx";
-          downloadLink.click();
-          window.URL.revokeObjectURL(tempURL);
+      message.textContent = 'Waiting ...'
+      const response = await fetch('https://arb-excel-converter-web.onrender.com/translate/prepare-translate', {
+        method: 'POST',
+        body: arbFormData
+      });
+    if (response.ok) {
+        const data = await response.blob();
+        const tempURL = window.URL.createObjectURL(data);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = tempURL;
+        downloadLink.download = "output.xlsx";
+        downloadLink.click();
+        window.URL.revokeObjectURL(tempURL);
 
-          message.textContent = "Excel File Generated & Downloaded Successfully";
+        message.textContent = "Excel File Generated & Downloaded Successfully";
 
-        } else {
-          console.error('Error in server response:', errorMessage);
-        }
-      } catch (error) {
-        console.error('Error uploading files:', error);
+      } else {
+        console.error('Error in server response:', errorMessage);
       }
-    });
+    } catch (error) {
+      console.error('Error uploading files:', error);
+    }
+  });
 }
 
 export function arbFilesSelect(){
