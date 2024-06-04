@@ -7,9 +7,9 @@ body {
 }
 
 .app-panel {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(94, 92, 92);
   border: solid, 1px, rgb(166, 166, 166);
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   position: absolute;
   top: 50%;
@@ -20,7 +20,7 @@ body {
 .select-option {
   height: 30px;
   width: 200px;
-  border: solid, 1px, rgb(166, 166, 166);
+  border: solid, 1px, rgb(0, 0, 0);
   color: rgb(35, 35, 35);
   border-radius: 5px;
 }
@@ -33,7 +33,7 @@ body {
 
 .hint {
   margin-top: 10px;
-  color: rgb(81, 81, 81);
+  color: rgb(0, 0, 0);
   display: block;
   font-size: 12px;
 }
@@ -41,7 +41,7 @@ body {
 .upload-button {
   height: 30px;
   width: 100px;
-  border: solid, 1px, rgb(166, 166, 166);
+  border: solid, 1px, rgb(0, 0, 0);
   border-radius: 5px;
   cursor: pointer;
   margin-left: 20px;
@@ -62,7 +62,7 @@ body {
   padding-bottom: 3px;
   height: 53px;
   margin-top: 35px;
-  border: 1px solid rgb(166, 166, 166);
+  border: 1px solid rgb(0, 0, 0);
   padding-left: -20px;
   overflow-y: auto;
 }
@@ -71,7 +71,7 @@ body {
   display: block;
   height: 40px;
   width: 326px;
-  border: solid, 1px, rgb(166, 166, 166);
+  border: solid, 1px, rgb(0, 0, 0);
   margin-bottom: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -88,12 +88,12 @@ body {
   padding-left: 5px;
   padding-bottom: 3px;
   height: 20px;
-  border: 1px solid rgb(166, 166, 166);
+  border: 1px solid rgb(0, 0, 0);
 }
 
 .refrence-label {
   font-size: 12px;
-  color: rgb(81, 81, 81);
+  color: rgb(0, 0, 0);
 }
 
 .error {
@@ -104,7 +104,7 @@ body {
 
 .error-message {
   font-size: 13px;
-  color: red;
+  color: rgb(104, 10, 10);
 }
 
 .message {
@@ -115,7 +115,7 @@ body {
 .reset-button {
   height: 40px;
   width: 326px;
-  border: solid, 1px, rgb(166, 166, 166);
+  border: solid, 1px, rgb(0, 0, 0);
   border-radius: 5px;
   cursor: pointer;
 }
