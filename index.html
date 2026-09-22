@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARB Converter</title>
+  <link rel="stylesheet" href="css/general.css">
+</head>
+<body>
+  
+  <div class="app-panel">
+    <div class="select-panel">
+      <select class="select-option" id="selectOption">
+        <option value="" disabled selected>Select Your Action</option>
+        <option value="prepare_to_translate">Prepare To Translate</option>
+        <option value="convert_translation">Convert Translation </option>
+      </select>
+  
+      <button class="upload-button" id="uploadButton">Upload</button>
+      
+      <input type="file" id="fileList" name="fileList" multiple style="display: none">
+      <input type="text" id="referenceFile" name="referenceFile" style="display: none;">
+
+      <input type="file" id="excelFile" name="file" style="display: none">
+
+      <p class="hint" id="hint"></p>
+
+      </div>
+
+
+    <div class="list-div">
+      <ul class="file-list" id="fileListShow"></ul>
+    </div>
+
+    <label class="refrence-label">Reference File:</label>
+
+    <p class="ref-file" id="referenceFileShow"></p>
+
+    <div class="error">
+      <p class="error-message" id="errorMessage"></p>
+      <p class= "message" id="message"></p>
+    </div>
+
+    <button class="convert-button" id="convertButton">Convert</button>
+
+    <button class="reset-button" id="resetButton">Reset Form</button>
+  </div>
+  <script type="module" src="./scripts/homepage.js"></script>
+</body>
+</html>
