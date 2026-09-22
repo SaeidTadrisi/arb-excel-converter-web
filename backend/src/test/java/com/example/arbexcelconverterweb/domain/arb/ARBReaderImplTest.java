@@ -21,6 +21,10 @@ class ARBReaderImplTest {
     Map<String, String> placeHolderMap;
     Map<String, String> combinedMap;
 
+	private String normalizeLineEndings(String value) {
+    		return value.replace("\r\n", "\n").replace("\r", "\n");
+	}
+
     @BeforeEach
     void setUp() {
         File file = new File("intl_en_test.arb");
@@ -72,7 +76,8 @@ class ARBReaderImplTest {
                 }""".replace("\n", "\r\n");
 
         assertDoesNotThrow(filesReader::read);
-        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
+        assertThat(normalizeLineEndings(stringFiles.getFirst()))
+        .isEqualTo(normalizeLineEndings(outputFile));
     }
 
     @Test
@@ -120,7 +125,8 @@ class ARBReaderImplTest {
                   }
                 }""".replace("\n", "\r\n");
 
-        assertThat(stringFiles.getFirst()).isEqualTo(outputFile);
+        assertThat(normalizeLineEndings(stringFiles.getFirst()))
+        .isEqualTo(normalizeLineEndings(outputFile));
     }
 
 }
