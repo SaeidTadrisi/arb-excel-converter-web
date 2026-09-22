@@ -9,118 +9,123 @@
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker)](https://www.docker.com/)
 [![Tests](https://img.shields.io/badge/Tests-JUnit5%20%2B%20AssertJ-25A162?logo=junit5)](https://junit.org/junit5/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![CI](https://github.com/SaeidTadrisi/arb-excel-converter-web/actions/workflows/ci.yml/badge.svg)](https://github.com/SaeidTadrisi/arb-excel-converter-web/actions/workflows/ci.yml)
 
-> ⚠️ Replace the badge/shield links and add a real CI badge once GitHub Actions is wired up (see [Roadmap](#roadmap)).
-
+**[Live Demo 🌍](https://saeidtadrisi.github.io/arb-localization-converter) — Try the frontend right in your browser!**
 ---
 
-## Overview
+## Why this project?
 
-Flutter/Dart projects store translatable strings in `.arb` (Application Resource Bundle) JSON files — one per locale. In real-world localization workflows, non-technical translators can't work directly in nested JSON, and professional translators typically expect a **spreadsheet**.
+Localization files are convenient for developers but not always practical for translators. This project was built to provide a simple workflow:
 
-This project was built to solve that exact problem for a real internationalization pipeline: it lets a developer **export one or many `.arb` files into a single Excel workbook** (one column per locale) for translators to fill in, and then **re-import the completed workbook back into valid `.arb` files**, ready to drop back into the app.
+1. Upload one or more `.arb` files.
+2. Select the reference locale.
+3. Export a single Excel workbook for translation.
+4. Upload the translated workbook.
+5. Download the generated ARB files as a ZIP archive.
 
-The repository is organized as two cooperating parts:
+The project preserves ARB message keys and placeholder metadata so translated resources can be returned to the application workflow.
 
-- **`backend/`** — a Spring Boot REST API that performs the actual ARB↔Excel transformation (parsing, placeholder extraction/re-assembly, workbook generation).
-- **`frontend/`** — a minimal vanilla HTML/CSS/JS client that lets a user upload files and download the converted result without needing Postman or curl.
+## Repository layout
 
-Both parts originated as an internal tool and were consolidated into this single repository for clarity and easier deployment.
-
-## Architecture & Tech Stack
-
-| Layer | Technology | Purpose |
-|---|---|---|
-| Backend runtime | Java 21, Spring Boot 3.2.4 | REST API, dependency injection, multipart file handling |
-| Excel I/O | Apache POI (`poi-ooxml`) | Reading/writing `.xlsx` / `.xls` workbooks |
-| JSON handling | `org.json`, Gson | Parsing ARB (JSON) files and re-serializing them with correct escaping |
-| Boilerplate reduction | Lombok | Logging (`@Log4j2`), getters/setters |
-| Testing | JUnit 5, AssertJ, Spring Boot Test | Unit tests per domain component + fake test doubles |
-| Build | Maven (with Maven Wrapper) | Dependency management & packaging |
-| Frontend | HTML5, CSS3, vanilla JavaScript (ES modules) | File upload UI, calls backend via `fetch` |
-| Containerization | Docker (multi-stage build) | Reproducible backend deployment |
-
-### Domain design
-
-The backend follows a **layered / Clean-Architecture-inspired** structure rather than a typical "fat controller" Spring app:
-
-```
-controller/       → REST endpoints (thin, delegate to application layer)
-application/      → Use-case orchestration (PrepareToTranslate, ConvertTranslation)
-domain/arb/       → ARB parsing, placeholder extraction, ARB→Excel orchestration
-domain/excel/     → Excel parsing, placeholder extraction, Excel→ARB orchestration
-domain/exception/ → Domain-specific exceptions
-infrastructure/   → Concrete adapters (file & Excel readers)
-presentation/dto/ → Request/response data carriers
+```text
+.
+├── backend/                 Spring Boot API and unit tests
+├── frontend/                Static HTML, CSS, and JavaScript client
+├── Dockerfile               Container build for the backend
+└── .github/workflows/       CI workflow
 ```
 
-Each transformation step (simple elements, placeholders, combining, writing) is its own single-responsibility class, which is what makes the domain layer independently unit-testable with fake readers (`FakeFilesReader`, `FakeExcelReader`).
+The backend and frontend were originally developed as separate repositories in 2024. They were consolidated here in 2026 so the complete application can be reviewed, built, and maintained from one repository. The original Git history has been preserved.
 
-## Key Features
+## Tech stack
 
-- **Bidirectional conversion**: `.arb → .xlsx` and `.xlsx/.xls → .arb` (packaged as a ZIP when multiple locales are involved).
-- **Multi-locale support**: combine several `.arb` files into one workbook, using a reference locale to define row order.
-- **ICU placeholder preservation**: nested `@key` placeholder metadata (`type`, `example`) is extracted, flattened for spreadsheet editing, and correctly reconstructed on the way back.
-- **Layered, testable architecture**: domain logic has zero framework dependency and is covered by focused unit tests with fake test doubles (no mocking framework required).
-- **Stateless REST API**: two endpoints (`/translate/prepare-translate`, `/translate/convert-translation`) that accept multipart uploads and stream back binary results.
-- **Framework-agnostic frontend**: a dependency-free JS client — no build step, no bundler — demonstrating the API can be consumed by any client.
+- Java 21
+- Spring Boot 3.2
+- Maven
+- Apache POI
+- Gson and org.json
+- HTML, CSS, and vanilla JavaScript
+- JUnit 5 and AssertJ
+- Docker
+- GitHub Actions
 
-## Getting Started
+## Features
+
+- Convert one or more ARB files into an Excel workbook.
+- Convert `.xlsx` or `.xls` translation workbooks into ARB files.
+- Package generated ARB files in a ZIP archive.
+- Preserve locale ordering through a selected reference file.
+- Extract and rebuild ARB placeholder metadata such as `type` and `example`.
+- Separate application, domain, infrastructure, controller, and DTO concerns.
+- Include unit tests for parsing, combining, reading, and conversion logic.
+
+## Run locally
 
 ### Prerequisites
-- Docker (recommended), **or** JDK 21 + Maven if running locally without containers.
 
-### Option 1 — Run with Docker (recommended)
+- JDK 21
+- Docker, or Maven through the included Maven Wrapper
 
-```bash
-# From the repository root
-docker build -t arb-excel-converter -f Dockerfile .
-docker run -p 8080:8080 arb-excel-converter
-```
-
-The API will be available at `http://localhost:8080`.
-
-### Option 2 — Run the backend locally with Maven
+### Backend
 
 ```bash
 cd backend
+./mvnw test
 ./mvnw spring-boot:run
 ```
 
-### Running the frontend
+On Windows PowerShell:
 
-The frontend is static — no build step required:
+```powershell
+cd backend
+.\mvnw test
+.\mvnw spring-boot:run
+```
+
+The API starts on `http://localhost:8080`.
+
+### Frontend
+
+The frontend is static and can be served from the `frontend/` directory using any static web server:
 
 ```bash
 cd frontend
-python3 -m http.server 5500   # or any static file server / Live Server extension
+python3 -m http.server 5500
 ```
 
-Then open `http://localhost:5500`. Update the `API_BASE_URL` in `scripts/config.js` (see [Refactoring Notes](#refactoring-notes--roadmap)) to point at your running backend instead of the previous hosted demo URL.
+> The current frontend uses the deployed Render API URL that was configured for the original project. To use a locally running backend, update the two `fetch` URLs in `frontend/scripts/prepareToTranslate.js` and `frontend/scripts/convertTranslation.js`.
 
-### API Reference
+## API
 
-| Endpoint | Method | Params | Returns |
+| Method | Endpoint | Input | Output |
 |---|---|---|---|
-| `/translate/prepare-translate` | `POST` | `fileList` (multiple `.arb` files), `referenceFile` (string, filename used to fix column order) | `output.xlsx` |
-| `/translate/convert-translation` | `POST` | `file` (single `.xlsx`/`.xls`) | `output.zip` containing one `.arb` per locale column |
+| `POST` | `/translate/prepare-translate` | Multiple ARB files under `fileList`, plus a `referenceFile` name | Excel workbook |
+| `POST` | `/translate/convert-translation` | One `.xlsx` or `.xls` file under `file` | ZIP archive containing ARB files |
 
-### Running Tests
+## Tests
 
 ```bash
 cd backend
 ./mvnw test
 ```
 
-## Refactoring Notes & Roadmap
+The test suite covers the ARB/Excel conversion components and includes test doubles for file and Excel readers.
 
-This codebase was reviewed and cleaned up for public presentation. Notable engineering improvements applied/recommended:
+## Docker
 
-1. **Removed hardcoded I/O paths** — file uploads no longer write into `ServletContext.getRealPath("/")` (fragile and unsafe on read-only container filesystems); use a configurable temp directory instead.
-2. **Removed dead/duplicate class** — a stray, empty `ExcelSimpleElementsExtractor` class inside `domain/exception` shadowed the real implementation in `domain/excel` and was deleted to avoid confusion.
-3. **Repository hygiene** — sample binaries (`en.xlsx`, `output.xlsx`) and stray scratch files were moved into test resources / `.gitignore`d instead of being committed at the repo root.
+From the repository root:
 
-Planned next steps: externalize the frontend API base URL into an environment-driven config, add a GitHub Actions CI workflow (build + test on push), and add integration tests for the REST controllers.
+```bash
+docker build -t arb-excel-converter .
+docker run --rm -p 8080:8080 arb-excel-converter
+```
+
+## Notes & Infrastructure
+
+- **Monorepo Refactoring (2026):** Originally developed as separate repositories in 2024, the frontend and backend were consolidated into this single repository. Full Git history has been preserved using unrelated-histories merging.
+- **Frontend Deployment:** The UI is automatically deployed to GitHub Pages via a custom GitHub Actions CI/CD pipeline whenever changes are pushed to the `frontend/` directory.
+- **Backend Hosting (Cold Start):** The REST API is hosted on a free Render instance. **Please note:** If the API hasn't received traffic in 15 minutes, the first request may take up to 50 seconds to complete while the server wakes up.
 
 ## License
 
