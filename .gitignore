@@ -1,6 +1,6 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Compiled / packaged ###
+*.class
+*.jar
+!**/.mvn/wrapper/maven-wrapper.jar
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Generated output (future files only — existing tracked files are unaffected) ###
+output.zip
+output_*.arb
+*.log
