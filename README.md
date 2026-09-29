@@ -126,7 +126,3 @@ docker run --rm -p 8080:8080 arb-excel-converter
 - **Monorepo Refactoring (2026):** Originally developed as separate repositories in 2024, the frontend and backend were consolidated into this single repository. Full Git history has been preserved using unrelated-histories merging.
 - **Frontend Deployment:** The UI is automatically deployed to GitHub Pages via a custom GitHub Actions CI/CD pipeline whenever changes are pushed to the `frontend/` directory.
 - **Backend Hosting (Cold Start):** The REST API is hosted on a free Render instance. **Please note:** If the API hasn't received traffic in 15 minutes, the first request may take up to 50 seconds to complete while the server wakes up.
-
-## License
-
-MIT — see [LICENSE](LICENSE) for details.
