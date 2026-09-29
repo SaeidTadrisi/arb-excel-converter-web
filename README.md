@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![CI](https://github.com/SaeidTadrisi/arb-excel-converter-web/actions/workflows/ci.yml/badge.svg)](https://github.com/SaeidTadrisi/arb-excel-converter-web/actions/workflows/ci.yml)
 
-**[Live Demo 🌍](https://saeidtadrisi.github.io/arb-localization-converter) — Try the frontend right in your browser!**
+**[Live Demo 🌍](https://saeidtadrisi.github.io/arb-excel-converter-web) — Try the frontend right in your browser!**
 ---
 
 ## Why this project?
